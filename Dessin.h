@@ -27,12 +27,12 @@ class Dessin
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Add ( Figure new_figure );
+    bool Add ( Figure new_figure, string figure_name );
     // Mode d'emploi :
     //  Ajoute la figure passé en paramètre au dessin
     //  Retourne Faux si l'ajout a échoué
 
-    bool Load( string file_name ); //TODO load only new figures
+    //bool Load( string file_name ); //TODO load only new figures
     // Mode d'emploi :
     //  Charge le dessin contenu dans le fichier passé en paramètre
     //  Retourne Faux si le chargement a échoué
@@ -46,6 +46,8 @@ public:
     // Mode d'emploi :
     //  Supprime du dessin la figure passée en paramètre
     //  Retourne Faux si la suppression a échoué
+    // Contrat :
+    //  La méthode se charge de vérifier si la igure existe ou non.
 
     bool Clear( );
     // Mode d'emploi :
@@ -70,7 +72,7 @@ private:
 
 //----------------------------------------------------- Attributs protégés
 
-    unordored_map<string, Figure> set_of_figures; // ensemble des figures
+    unordored_map<string, Figure> figure_set; // ensemble des figures
                                                   // qui constituent les dessin
 
 };
