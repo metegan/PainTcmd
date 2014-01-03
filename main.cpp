@@ -1,8 +1,7 @@
-#include <iostream>
+#include <string>
 #include "Dessin.h"
 #include "Figure.h"
 #include "StringExt.h"
-#include <string>
 using namespace std;
 
 void create_figure(string& cmd, vector<string>& cmd_split, Dessin& dessin, string& figure_name )
@@ -15,7 +14,6 @@ void create_figure(string& cmd, vector<string>& cmd_split, Dessin& dessin, strin
 int main()
 {
     Dessin* dessin = new Dessin();
-    ifstream file;
     string cmd;
     string figure_name;
     vector<string> cmd_split;
@@ -31,16 +29,7 @@ int main()
         if( cmd.compare("EXIT") )
             { break; }
         if( cmd.compare("LOAD") )
-        {
-            file.open( cmd_split[1] );
-            if( file.is_open() )
-            while( getline(file,cmd) )
-            {
-                cmd_split = split(cmd, ' ');
-                cmd = cmd_split[0];
-                create_figure(cmd, cmd_split, dessin, figure_name);
-            }
-        }
+            { dessin->Load( cmd_split[1] ); }
         else
             { create_figure(cmd, cmd_split, dessin, figure_name); }
     }

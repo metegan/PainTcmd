@@ -42,6 +42,11 @@ public:
     //  Enregistre le dessin dans le fichier passé en paramètre
     //  Retourne Faux si l'enregistrement a échoué
 
+    bool Load( string file_name ); //TODO save only modifications
+    // Mode d'emploi :
+    //  Charge les figures contenues dans le fichier passé en paramètre
+    //  Retourne Faux si le chargement a échoué
+
     bool Delete( string figure_name );
     // Mode d'emploi :
     //  Supprime du dessin la figure passée en paramètre

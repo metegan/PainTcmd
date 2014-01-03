@@ -10,9 +10,13 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+#include <string>
+#include <iostream>
 
 //------------------------------------------------------ Include personnel
 #include "Figure.h"
+#include "StringExt.h"
+
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -40,6 +44,24 @@ bool Dessin::Add ( Figure new_figure, string figure_name )
     return true;
 }
 
+bool Dessin::Load ( string file_name )
+// Algorithme :
+//
+{
+    ifstream file;
+    file.open( file_name );
+    if( file.is_open() )
+    {
+        while( getline(file,cmd) )
+        {
+            cmd_split = split(cmd, ' ');
+            cmd = cmd_split[0];
+            create_figure(cmd, cmd_split, dessin, figure_name);
+        }
+        return true;
+    }
+    return false;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
