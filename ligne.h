@@ -1,46 +1,41 @@
 /*************************************************************************
-                           Cercle  -  description
+                           Ligne  -  description
                              -------------------
-    début                : 11 oct. 2013
-    copyright            : (C) 2013 par hhannetel
+    début                :  3 jan. 2014
+    copyright            :
 *************************************************************************/
 
-//---------- Interface de la classe <Cercle> (fichier Cercle.h) ------
-#if ! defined ( CERCLE_H_ )
-#define CERCLE_H_
+//---------- Interface de la classe <Ligne> (fichier Ligne.h) ------
+#if ! defined ( Ligne_H_ )
+#define Ligne_H_
 
 //--------------------------------------------------- Interfaces utilisées
 #include "Point.h"
 #include "Figure.h"
+#include <string>
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Cercle>
+// Rôle de la classe <Ligne>
 //
 //------------------------------------------------------------------------
 
-class Cercle : public Figure
+class Ligne : public Figure
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( string nom, int x, int y );
-    // Mode d'emploi :
-    //  déplace le point de x en abscisse et y en ordonnée
+    bool Move ( int x, int y );
 
     string Get_cmd( );
-    // Mode d'emploi :
-    //  génère la commande qui a permis la création la figure
 
-    void Display( );
-    // Mode d'emploi :
-    //  affiche le nom du cercle
+    void Display();
 
 //-------------------------------------------- Constructeurs - destructeur
-    Cercle ( Point center, int radius );
+    Ligne (Point debut, Point fin ) ;
 
-    virtual ~Cercle ( );
+    virtual ~Ligne ( );
 
 //------------------------------------------------------------------ PRIVE
 
@@ -49,14 +44,12 @@ private:
 
 //----------------------------------------------------- Attributs protégés
 
-    int radius; // rayon du cercle
-
 
 };
 
-//--------------------------- Autres définitions dépendantes de <Cercle>
+//--------------------------- Autres définitions dépendantes de <Ligne>
 
-#endif // CERCLE_H_
+#endif // Ligne_H_
 
 
 

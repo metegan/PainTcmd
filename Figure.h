@@ -12,6 +12,8 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <vector>
+
+#include "Point.h"
 using namespace std;
 
 
@@ -42,9 +44,9 @@ public:
     //  affiche le nom de la figure
 
 //-------------------------------------------- Constructeurs - destructeur
-    virtual Figure ( vector<string> cmd );
+    Figure ( vector<string> cmd );
 
-    virtual Figure ( );
+    Figure ( );
 
     virtual ~Figure ( );
 

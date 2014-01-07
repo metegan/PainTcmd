@@ -63,6 +63,24 @@ bool Dessin::Load ( string file_name )
     return false;
 }
 
+bool Dessin::Save( string file_name )
+    {
+
+    }
+
+bool Dessin::Clear( )
+    {
+        figure_set.clear();
+    }
+
+void Dessin::Display( )
+    {
+        for(int i=0;i<figure_set.count();i++)
+        {
+            cout<<figure_set(i).Display()<<" ";
+        }
+    }
+
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
 {

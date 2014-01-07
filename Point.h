@@ -24,9 +24,12 @@ class Point
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( int x, int y );
+    bool Move ( int deltaX, int deltaY );
     // Mode d'emploi :
     //  déplace le point de x en abscisse et y en ordonnée
+
+    int getX();
+    int getY();
 
 //-------------------------------------------- Constructeurs - destructeur
     Point ( int x, int y );
