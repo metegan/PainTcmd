@@ -26,14 +26,10 @@ class Ligne : public Figure
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( int x, int y );
 
-    string Get_cmd( );
-
-    void Display();
 
 //-------------------------------------------- Constructeurs - destructeur
-    Ligne (Point debut, Point fin ) ;
+    Ligne ( ) ;
 
     virtual ~Ligne ( );
 

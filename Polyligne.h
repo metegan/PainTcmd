@@ -28,9 +28,6 @@ public:
 
     bool Move ( int x, int y );
 
-    string Get_cmd( );
-
-    void Display();
 
 //-------------------------------------------- Constructeurs - destructeur
     Polyligne ( ) ;

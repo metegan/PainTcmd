@@ -12,56 +12,54 @@
 //-------------------------------------------------------- Include système
 using namespace std;
 #include <iostream>
-
+#include <stdlib.h>
 //------------------------------------------------------ Include personnel
 #include "Figure.h"
+
+#include "Point.h"
+#include "Rectangle.h"
+#include "Cercle.h"
+#include "Polyligne.h"
+#include "ligne.h"
+
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Figure::Figure ( vector<string> cmd )
+    Figure::Figure ( vector<string> cmd ) { }
+
+    void Figure::Add_point( Point& p )
     {
-        name=cmd(1);
-        if(cmd(0)=='C')
-        {
-            type="Cercle";
-            Point p=new Point(cmd(2),cmd(3));
-            Cercle c=new Cercle(p, cmd(4));
-            Dessin.add(c);
-        }
-        else if(cmd(0)=='R')
-        {
-            type="Rectangle";
-            Point bas=new Point(cmd(2),cmd(3));
-            Point haut=new Point(cmd(4),cmd(5));
-            Rectangle r=new Rectangle(bas,haut);
-            Dessin.add(r);
-        }
-        else if(cmd(0)=='L')
-        {
-            type="Ligne";
-            Point debut=new Point(cmd(2),cmd(3));
-            Point fin=new Point(cmd(4),cmd(5));
-            Ligne l=new Ligne(debut,fin);
-            Dessin.add(l);
-        }
-        else if(cmd(0)=='PL')
-        {
-            type="Polyligne";
-            //int nbPoints = cmd.size()/2 - 1;
-            Polyligne pl=new Polyligne();
-            for(int i=2;i<cmd.size();)
-            {
-                Point p=new Point(cmd(i++),cmd(i++));
-                pl.set_of_points.push_back(p);
-            }
+        set_of_points.push_back(p);
+    }
 
+    void Figure::Set_type( string t )
+    {
+        type=t;
+    }
+
+    string Figure::Get_cmd( string name )
+    {
+        string cmd = type + " " + name;
+        for(itv i = set_of_points.begin(); i < set_of_points.end(); i++)
+        {
+            cmd+= " " + to_string(i->getX()) + " " + to_string(i->getY());
         }
 
+        return cmd;
+    }
+    bool Figure::Move ( int x, int y )
+    {
+        for(itv it = set_of_points.begin(); it != set_of_points.end(); it++)
+
+            if(!(it->Move(x,y))) return false;
+
+        return true;
 
     }
+
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées

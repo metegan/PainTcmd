@@ -10,9 +10,11 @@
 #define DESSIN_H_
 
 //--------------------------------------------------- Interfaces utilisées
-#include <unordored_map>
+#include <unordered_map>
 #include <string>
 #include "Figure.h"
+//--------------------------------------------------- Types personnels
+typedef unordered_map<string,Figure>::iterator iter;
 
 using namespace std;
 //------------------------------------------------------------------------
@@ -42,7 +44,7 @@ public:
     //  Enregistre le dessin dans le fichier passé en paramètre
     //  Retourne Faux si l'enregistrement a échoué
 
-    bool Load( string file_name ); //TODO save only modifications
+    bool Load( string file_name, string cmd, Dessin dessin ); //TODO save only modifications
     // Mode d'emploi :
     //  Charge les figures contenues dans le fichier passé en paramètre
     //  Retourne Faux si le chargement a échoué
@@ -61,7 +63,11 @@ public:
 
     void Display( );
     // Mode d'emploi :
-    //  Affiche le nom de toutes les figures du dessin courant
+    //  Affiche les commandes qui ont généré le dessin
+
+    Figure Create_figure( vector<string> cmd );
+    // Mode d'emploi :
+    //  Crée la figure correspondante et la retourne
 
 
 
@@ -77,7 +83,7 @@ private:
 
 //----------------------------------------------------- Attributs protégés
 
-    unordored_map<string, Figure> figure_set; // ensemble des figures
+    unordered_map<string, Figure> figure_set; // ensemble des figures
                                                   // qui constituent les dessin
 
 };

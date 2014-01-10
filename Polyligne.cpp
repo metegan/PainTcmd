@@ -25,26 +25,14 @@ using namespace std;
 
     bool Polyligne::Move ( int x, int y )
     {
-        for(int i=0; i<set_of_points.size();i++)
-            return Move(set_of_points(i));
+        for(itv it = set_of_points.begin(); it != set_of_points.end(); it++)
+
+            if(!(it->Move(x,y))) return false;
+
+        return true;
     }
 
-    void Polyligne::Display( )
-    {
-        cout<<name<<" ";
-    }
 
-    string Polyligne::Get_cmd( )
-    {
-        string affichage = "PL " + name + " ";
-        for(int i = 0; i < set_of_points.size(); i++)
-        {
-            affichage+= to_string(set_of_points[i].getX()) + to_string(set_of_points[i].getY());
-        }
-
-        return affichage + to_string(radius);
-
-    }
 
 //------------------------------------------------------------------ PRIVE
 

@@ -29,16 +29,13 @@ public:
     // Mode d'emploi :
     //  déplace le point de x en abscisse et y en ordonnée
 
-    string Get_cmd( );
+    string Get_cmd( string name );
     // Mode d'emploi :
     //  génère la commande qui a permis la création la figure
 
-    void Display( );
-    // Mode d'emploi :
-    //  affiche le nom du cercle
 
 //-------------------------------------------- Constructeurs - destructeur
-    Cercle ( Point center, int radius );
+    Cercle ( vector<string> cmd, int radius );
 
     virtual ~Cercle ( );
 

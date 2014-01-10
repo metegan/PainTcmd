@@ -12,9 +12,13 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <vector>
-
 #include "Point.h"
 using namespace std;
+
+typedef vector<Point>::iterator itv;
+
+
+
 
 
 //------------------------------------------------------------------------
@@ -29,12 +33,12 @@ class Figure
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    virtual bool Move ( string nom, int x, int y );
+    bool Move ( string nom, int x, int y );
     // Mode d'emploi :
     //  déplace la figure de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible
 
-    virtual string Get_cmd( );
+    string Get_cmd( string name );
     // Mode d'emploi :
     //  génère la commande qui a permis la création la figure
 
@@ -43,22 +47,25 @@ public:
     // Mode d'emploi :
     //  affiche le nom de la figure
 
+    void Add_point( Point& p );
+
+    void Set_type( string t );
+
+
 //-------------------------------------------- Constructeurs - destructeur
     Figure ( vector<string> cmd );
 
-    Figure ( );
+    Figure ();
 
     virtual ~Figure ( );
 
+
 //------------------------------------------------------------------ PRIVE
-
 protected:
-//----------------------------------------------------- Méthodes publiques
-
 //----------------------------------------------------- Attributs protégés
 
-    string name; // nom de la figure
-	string type; // type de la figure
+
+   	string type; // type de la figure
 	vector<Point> set_of_points; // points qui définissent la figure
 
 

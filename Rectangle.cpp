@@ -21,11 +21,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Rectangle::Rectangle ( Point bas, Point haut )
-    {
-        set_of_points[0]=bas;
-        set_of_points[1]=haut;
-    }
+    Rectangle::Rectangle ( ) { }
 
     bool Rectangle::Move ( int x, int y )
     {
@@ -33,17 +29,6 @@ using namespace std;
         return set_of_points[1].Move(x,y);
     }
 
-    void Rectangle::Display( )
-    {
-        cout<<name<<" ";
-    }
-
-    string Rectangle::Get_cmd( )
-    {
-        return "R" + name + " " + to_string(set_of_points[0].getX()) + to_string(set_of_points[0].getY()) +
-            to_string(set_of_points[1].getX()) + to_string(set_of_points[1].getY()) + to_string(radius);
-
-    }
 
 //------------------------------------------------------------------ PRIVE
 

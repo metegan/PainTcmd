@@ -28,12 +28,10 @@ public:
 
     bool Move ( int x, int y );
 
-    string Get_cmd( );
 
-    void Display( );
 
 //-------------------------------------------- Constructeurs - destructeur
-    Rectangle ( Point bas, Point haut ) ;
+    Rectangle ( ) ;
 
     virtual ~Rectangle ( );
 

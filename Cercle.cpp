@@ -22,27 +22,21 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Cercle::Cercle ( Point center, int radius ) : radius(radius)
-    {
-        set_of_points[0]=center;
-    }
+    Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
+        {
+            radius=r;
+        }
 
     bool Cercle::Move ( string nom, int x, int y )
     {
         return set_of_points[0].Move(x,y);
     }
 
-    void Cercle::Display( )
-    {
-        cout<<name<<" ";
-    }
-
-    string Cercle::Get_cmd( )
+    string Cercle::Get_cmd( string name )
     {
 
-        //return "C " + name + " " + to_string(set_of_points[0].getX()) + to_string(set_of_points[0].getY()) + to_string(radius);
-
     }
+
 
 //------------------------------------------------------------------ PRIVE
 
