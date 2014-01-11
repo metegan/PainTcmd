@@ -33,7 +33,7 @@ class Figure
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( string nom, int x, int y );
+    bool Move ( int x, int y );
     // Mode d'emploi :
     //  déplace la figure de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible

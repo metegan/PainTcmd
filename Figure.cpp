@@ -16,8 +16,7 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "Figure.h"
 
-#include "Point.h"
-#include "Rectangle.h"
+#include "Point.h"#include "Rectangle.h"
 #include "Cercle.h"
 #include "Polyligne.h"
 #include "ligne.h"

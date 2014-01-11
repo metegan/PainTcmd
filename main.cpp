@@ -2,14 +2,9 @@
 #include "Dessin.h"
 #include "Figure.h"
 #include "StringExt.h"
-using namespace std;
+#include <iostream>
 
-void create_figure(string& cmd, vector<string>& cmd_split, Dessin& dessin, string& figure_name )
-{
-    Figure* figure = new Figure( cmd_split[2] ); // TODO adapter en fonction du type de figure
-    figure_name = cmd_split[1];
-    dessin->Add(figure_name, figure);
-}
+using namespace std;
 
 int main()
 {
@@ -24,14 +19,13 @@ int main()
     {
         cin >> cmd;
         cmd_split = split(cmd, ' ');
-        cmd = cmd_split[0];
 
-        if( cmd.compare("EXIT") )
+        if( cmd_split[0].compare("EXIT") )
             { break; }
-        if( cmd.compare("LOAD") )
-            { dessin->Load( cmd_split[1] ); }
+        if(  cmd_split[0].compare("LOAD") )
+                  { dessin->Load( cmd_split[1], cmd, *dessin ); }
         else
-            { create_figure(cmd, cmd_split, dessin, figure_name); }
+            { dessin->Create_figure(cmd_split); }
     }
 
     return 0;

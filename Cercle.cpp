@@ -10,22 +10,18 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-using namespace std;
 #include <iostream>
 
 
 //------------------------------------------------------ Include personnel
 #include "Cercle.h"
+using namespace std;
 
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
-        {
-            radius=r;
-        }
 
     bool Cercle::Move ( string nom, int x, int y )
     {
@@ -42,3 +38,10 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes protégées
 
+//-------------------------------------------- Constructeurs - destructeur
+
+    Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
+        {
+
+            radius=r;
+        }
