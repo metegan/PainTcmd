@@ -41,11 +41,11 @@ bool Dessin::Delete ( string nom_figure )
     return true;
 }
 
-bool Dessin::Add ( Figure new_figure, string figure_name )
+bool Dessin::Add ( Figure* new_figure, string figure_name )
 // Algorithme :
 //
 {
-    if( figure_set.find(figure_name) == figure_set.end() )
+    if( figure_set.find(figure_name) == figure_set.end() && figure_set.size() != 0 )
         { return false; }
     else
         { figure_set[figure_name] = new_figure; }
@@ -66,7 +66,7 @@ bool Dessin::Load ( string file_name, string cmd, Dessin dessin )
         {
             cmd_split = split(cmd, ' ');
             new_fig = new Figure(cmd_split);
-            dessin.Add(*new_fig, cmd_split[1]);
+            dessin.Add(new_fig, cmd_split[1]);
         }
         return true;
     }
@@ -81,50 +81,66 @@ bool Dessin::Save( string file_name )
 bool Dessin::Clear( )
     {
         figure_set.clear();
+        return true;
     }
 
 void Dessin::Display( )
-    {
-
-        for(iter it = figure_set.begin();it!=figure_set.end();it++)
-        {
-            cout<<it->second.Get_cmd(it->first)<<endl;
-        }
-    }
-Figure Dessin::Create_figure( vector<string> cmd )
 {
-        Figure* fig = new Figure();
 
-        if(cmd[0].compare("C"))
+    for(iter it = figure_set.begin(); it != figure_set.end(); it++)
+    {
+        cout << it->second->Get_cmd(it->first) << endl;
+    }
+}
+
+Figure* Dessin::Create_figure( vector<string> cmd )
+{
+        Figure* fig;
+        Point* p;
+
+        if(!cmd[0].compare("C"))
         {
-           fig=new Cercle(cmd, atoi(cmd[4].c_str()));
+            fig=new Cercle(cmd, atoi(cmd[4].c_str()));
+            p=new Point( atoi(cmd[2].c_str()), atoi(cmd[3].c_str()) );
+            fig->Add_point(*p);
+            fig->Set_type(cmd[0]);
+            return fig;
+
         }
-        else if(cmd[0].compare("R"))
+        else if(!cmd[0].compare("R"))
         {
-            Rectangle* fig=new Rectangle();
+            fig=new Rectangle();
         }
-        else if(cmd[0].compare("L"))
+        else if(!cmd[0].compare("L"))
         {
-            Ligne* fig=new Ligne();
+            fig=new Ligne();
         }
-        else if(cmd[0].compare("PL"))
+        else if(!cmd[0].compare("PL"))
         {
-            Polyligne* fig=new Polyligne();
+            fig=new Polyligne();
         }
         else
         {
-            return *fig;
+            return fig;
         }
          fig->Set_type(cmd[0]);
-         Point* p;
-         for(int i=2;i<cmd.size();)
+         for(int i=2;i<cmd.size();i++)
             {
-                p=new Point(atoi(cmd[i++].c_str()),atoi(cmd[i++].c_str()));
+                p=new Point( atoi(cmd[i].c_str()), atoi(cmd[i+1].c_str()) );
+                i++;
                 fig->Add_point(*p);
             }
-          return *fig;
+          return fig;
 }
 
+bool Dessin::Move(string figure_name, int dx, int dy )
+{
+    if ( figure_set.find(figure_name) == figure_set.end() )
+        { return false; }
+    else
+        { figure_set[figure_name]->Move(dx, dy); }
+    return true;
+}
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
 {

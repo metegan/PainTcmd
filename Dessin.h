@@ -14,7 +14,7 @@
 #include <string>
 #include "Figure.h"
 //--------------------------------------------------- Types personnels
-typedef unordered_map<string,Figure>::iterator iter;
+typedef unordered_map<string,Figure*>::iterator iter;
 
 using namespace std;
 //------------------------------------------------------------------------
@@ -29,7 +29,7 @@ class Dessin
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Add ( Figure new_figure, string figure_name );
+    bool Add ( Figure* new_figure, string figure_name );
     // Mode d'emploi :
     //  Ajoute la figure passé en paramètre au dessin
     //  Retourne Faux si l'ajout a échoué
@@ -65,10 +65,14 @@ public:
     // Mode d'emploi :
     //  Affiche les commandes qui ont généré le dessin
 
-    Figure Create_figure( vector<string> cmd );
+    Figure* Create_figure( vector<string> cmd );
     // Mode d'emploi :
     //  Crée la figure correspondante et la retourne
 
+    bool Move(string figure_name, int dx, int dy );
+    // Mode d'emploi :
+    //  Supprime toutes les figures du dessin courant
+    //  Retourne Faux si la suppression a échoué
 
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -83,7 +87,7 @@ private:
 
 //----------------------------------------------------- Attributs protégés
 
-    unordered_map<string, Figure> figure_set; // ensemble des figures
+    unordered_map<string, Figure*> figure_set; // ensemble des figures
                                                   // qui constituent les dessin
 
 };

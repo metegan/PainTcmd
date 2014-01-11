@@ -28,10 +28,6 @@ using namespace std;
         return set_of_points[0].Move(x,y);
     }
 
-    string Cercle::Get_cmd( string name )
-    {
-
-    }
 
 
 //------------------------------------------------------------------ PRIVE
@@ -40,8 +36,9 @@ using namespace std;
 
 //-------------------------------------------- Constructeurs - destructeur
 
-    Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
-        {
+Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
+    {
+        radius=r;
+    }
 
-            radius=r;
-        }
+Cercle::~Cercle ( ){}

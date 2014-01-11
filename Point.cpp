@@ -22,6 +22,7 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
     Point::Point ( int x, int y ) : x(x), y(y) {}
+    Point::~Point ( )  {}
 
     int Point::getX()
     {
@@ -37,6 +38,7 @@ using namespace std;
     {
       x+=deltaX;
       y+=deltaY;
+      return true;
     }
 
 

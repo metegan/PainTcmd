@@ -43,10 +43,6 @@ public:
     //  génère la commande qui a permis la création la figure
 
 
-    virtual void Display( );
-    // Mode d'emploi :
-    //  affiche le nom de la figure
-
     void Add_point( Point& p );
 
     void Set_type( string t );

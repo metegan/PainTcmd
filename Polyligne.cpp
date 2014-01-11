@@ -21,7 +21,7 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Polyligne::Polyligne ( ) {}
+
 
     bool Polyligne::Move ( int x, int y )
     {
@@ -32,8 +32,8 @@ using namespace std;
         return true;
     }
 
-
-
+    Polyligne::Polyligne ( ) {}
+    Polyligne::~Polyligne ( ) {}
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées

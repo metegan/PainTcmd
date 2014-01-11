@@ -8,7 +8,6 @@
 //---------- Interface de la classe <Point> (fichier Point.h) ------
 #if ! defined ( POINT_H_ )
 #define POINT_H_
-
 //--------------------------------------------------- Interfaces utilisées
 
 

@@ -21,7 +21,6 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-    Rectangle::Rectangle ( ) { }
 
     bool Rectangle::Move ( int x, int y )
     {
@@ -30,6 +29,8 @@ using namespace std;
     }
 
 
+    Rectangle::Rectangle ( ) { }
+    Rectangle::~Rectangle ( ) { }
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées

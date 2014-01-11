@@ -29,6 +29,10 @@ using namespace std;
 //----------------------------------------------------- Méthodes publiques
     Figure::Figure ( vector<string> cmd ) { }
 
+    Figure::Figure ( ) { }
+
+    Figure::~Figure ( ) { }
+
     void Figure::Add_point( Point& p )
     {
         set_of_points.push_back(p);
@@ -42,11 +46,12 @@ using namespace std;
     string Figure::Get_cmd( string name )
     {
         string cmd = type + " " + name;
-        for(itv i = set_of_points.begin(); i < set_of_points.end(); i++)
+        cout << cmd << endl;
+        for(itv i = set_of_points.begin(); i != set_of_points.end(); i++)
         {
-            cmd+= " " + to_string(i->getX()) + " " + to_string(i->getY());
+            cmd += " " + to_string(i->getX()) + " " + to_string(i->getY());
         }
-
+        cout << cmd << endl;
         return cmd;
     }
     bool Figure::Move ( int x, int y )
