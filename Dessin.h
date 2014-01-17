@@ -12,6 +12,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <unordered_map>
 #include <string>
+#include <vector>
 #include "Figure.h"
 //--------------------------------------------------- Types personnels
 typedef unordered_map<string,Figure*>::iterator iter;
@@ -44,7 +45,7 @@ public:
     //  Enregistre le dessin dans le fichier passé en paramètre
     //  Retourne Faux si l'enregistrement a échoué
 
-    bool Load( string file_name, string cmd, Dessin dessin ); //TODO save only modifications
+    bool Load( string file_name, string cmd); //TODO save only modifications
     // Mode d'emploi :
     //  Charge les figures contenues dans le fichier passé en paramètre
     //  Retourne Faux si le chargement a échoué
@@ -73,7 +74,13 @@ public:
     // Mode d'emploi :
     //  Supprime toutes les figures du dessin courant
     //  Retourne Faux si la suppression a échoué
-
+    void Set_last_cmd(vector<string> cmd);
+    // Mode d'emploi :
+    //  Met à jour la dernière commande qui a modifié le dessin
+    vector<string> Get_last_cmd();
+    // Mode d'emploi :
+    //  Retourne la dernière commande qui a modifié le dessin
+    void Undo();
 
 //-------------------------------------------- Constructeurs - destructeur
     Dessin ( );
@@ -83,11 +90,13 @@ public:
 //------------------------------------------------------------------ PRIVE
 
 private:
-//----------------------------------------------------- Méthodes publiques
-
 //----------------------------------------------------- Attributs protégés
 
+    vector<string> last_cmd;
+    Figure* last_erased;
     unordered_map<string, Figure*> figure_set; // ensemble des figures
+                                                  // qui constituent les dessin
+    unordered_map<string, Figure*> old_figure_set; // ensemble des figures
                                                   // qui constituent les dessin
 
 };

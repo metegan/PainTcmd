@@ -23,10 +23,10 @@ using namespace std;
 
 //----------------------------------------------------- Méthodes publiques
 
-    bool Cercle::Move ( string nom, int x, int y )
-    {
-        return set_of_points[0].Move(x,y);
-    }
+string Cercle::Get_radius()
+{
+    return to_string(radius);
+}
 
 
 

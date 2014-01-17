@@ -25,11 +25,7 @@ class Cercle : public Figure
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( string nom, int x, int y );
-    // Mode d'emploi :
-    //  déplace le point de x en abscisse et y en ordonnée
-
-
+    string Get_radius();
 
 //-------------------------------------------- Constructeurs - destructeur
     Cercle ( vector<string> cmd, int r );

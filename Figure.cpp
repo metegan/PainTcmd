@@ -43,15 +43,19 @@ using namespace std;
         type=t;
     }
 
-    string Figure::Get_cmd( string name )
+    string Figure::Get_cmd( Figure* fig, string name )
     {
         string cmd = type + " " + name;
-        cout << cmd << endl;
         for(itv i = set_of_points.begin(); i != set_of_points.end(); i++)
         {
             cmd += " " + to_string(i->getX()) + " " + to_string(i->getY());
         }
-        cout << cmd << endl;
+        if(!type.compare("C"))
+        {
+            Cercle* cer=(Cercle*)fig;
+            string rayon=cer->Get_radius();
+            return cmd + " " + rayon;
+        }
         return cmd;
     }
     bool Figure::Move ( int x, int y )

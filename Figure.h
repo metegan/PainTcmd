@@ -38,7 +38,7 @@ public:
     //  déplace la figure de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible
 
-    string Get_cmd( string name );
+    string Get_cmd( Figure* fig, string name );
     // Mode d'emploi :
     //  génère la commande qui a permis la création la figure
 
