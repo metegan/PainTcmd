@@ -14,8 +14,11 @@
 #include <string>
 #include <vector>
 #include "Figure.h"
+#include "Oa.h"
 //--------------------------------------------------- Types personnels
 typedef unordered_map<string,Figure*>::iterator iter;
+typedef unordered_map<string,vector<string>>::iterator itoa;
+typedef vector<string>::iterator itvstr;
 
 using namespace std;
 //------------------------------------------------------------------------
@@ -35,10 +38,9 @@ public:
     //  Ajoute la figure passé en paramètre au dessin
     //  Retourne Faux si l'ajout a échoué
 
-    //bool Load( string file_name ); //TODO load only new figures
-    // Mode d'emploi :
-    //  Charge le dessin contenu dans le fichier passé en paramètre
-    //  Retourne Faux si le chargement a échoué
+    bool Add_oa( vector<string> cmd_split );
+    //Mode d'emploi:
+    //
 
     bool Save( string file_name ); //TODO save only modifications
     // Mode d'emploi :
@@ -98,6 +100,7 @@ private:
                                                   // qui constituent les dessin
     unordered_map<string, Figure*> old_figure_set; // ensemble des figures
                                                   // qui constituent les dessin
+    unordered_map<string, vector<string>> oa_set; //ensemble des objets agrégés
 
 };
 

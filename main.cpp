@@ -13,6 +13,7 @@ int main()
     string cmd;
     string figure_name;
     Figure* new_fig;
+    Oa* new_oa;
     vector<string> cmd_split;
     bool change;
 
@@ -59,6 +60,10 @@ int main()
                 dessin->Clear();
             }
 
+        else if( !cmd_split[0].compare("OA") )
+            {
+                dessin->Add_oa(cmd_split);
+            }
         else
         {
             new_fig = dessin->Create_figure(cmd_split);

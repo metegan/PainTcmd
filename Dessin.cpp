@@ -60,6 +60,7 @@ bool Dessin::Add ( Figure* new_figure, string figure_name )
     return true;
 }
 
+
 bool Dessin::Load ( string file_name, string cmd)
 // Algorithme :
 //
@@ -119,6 +120,43 @@ void Dessin::Display( )
     {
         cout << it->second->Get_cmd(it->second,it->first) << endl;
     }
+    for(itoa it = oa_set.begin(); it != oa_set.end(); it++)
+    {
+        cout << it->first << " ";
+        for(itvstr i=it->second.begin(); i != it->second.end(); i++)
+        {
+            cout<< *i << " ";
+        }
+
+        cout<<endl;
+    }
+}
+
+bool Dessin::Add_oa( vector<string> cmd_split )
+{
+    vector<string> agregats;
+    vector<string>* new_agregats = new vector<string>();
+    string nom=cmd_split[1];
+    for( itvstr it = cmd_split.begin(); it != cmd_split.end(); it++ )
+    {
+        if(figure_set.find(*it)==figure_set.end())
+        {
+            if( oa_set.find(*it) == oa_set.end() && oa_set.size()!=0)
+                return false;
+            else if (oa_set.size() != 0)
+            {
+                agregats = oa_set[*it];
+                cout << oa_set[*it].at(0);
+                for( itvstr itn = agregats.begin(); itn != agregats.end(); itn++ )
+                {
+                    new_agregats->push_back(*itn);
+                }
+            }
+        }
+        else new_agregats->push_back(*it);
+    }
+    oa_set[nom]=*new_agregats;
+    return true;
 }
 
 Figure* Dessin::Create_figure( vector<string> cmd )
@@ -147,6 +185,7 @@ Figure* Dessin::Create_figure( vector<string> cmd )
         {
             fig=new Polyligne();
         }
+
         else
         {
             return fig;
