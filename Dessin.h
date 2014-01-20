@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 #include "Figure.h"
-#include "Oa.h"
 //--------------------------------------------------- Types personnels
 typedef unordered_map<string,Figure*>::iterator iter;
 typedef unordered_map<string,vector<string>>::iterator itoa;

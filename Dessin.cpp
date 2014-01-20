@@ -35,10 +35,23 @@ bool Dessin::Delete ( string nom_figure )
 //
 {
     if( figure_set.find(nom_figure) != figure_set.end() )
-        {
+    {
             last_erased = figure_set[nom_figure];
             figure_set.erase( nom_figure );
+            for( itoa it = oa_set.begin(); it != oa_set.end(); it++)
+            {
+                for( itvstr i=it->second.begin(); i != it->second.end(); i++)
+                {
+                    if( !(*i).compare(nom_figure) )
+                    {
+                        it->second.erase(i--);
+                        }
+                }
+                if( it->second.size() < 2 )
+                    oa_set.erase(it);
+
             }
+    }
     else
         { return false; }
     return true;
@@ -122,7 +135,7 @@ void Dessin::Display( )
     }
     for(itoa it = oa_set.begin(); it != oa_set.end(); it++)
     {
-        cout << it->first << " ";
+        cout << "OA " << it->first << " ";
         for(itvstr i=it->second.begin(); i != it->second.end(); i++)
         {
             cout<< *i << " ";
@@ -137,13 +150,13 @@ bool Dessin::Add_oa( vector<string> cmd_split )
     vector<string> agregats;
     vector<string>* new_agregats = new vector<string>();
     string nom=cmd_split[1];
-    for( itvstr it = cmd_split.begin(); it != cmd_split.end(); it++ )
+    for( itvstr it = next(cmd_split.begin(),2); it != cmd_split.end(); it++ )
     {
         if(figure_set.find(*it)==figure_set.end())
         {
-            if( oa_set.find(*it) == oa_set.end() && oa_set.size()!=0)
+            if( oa_set.find(*it) == oa_set.end() )
                 return false;
-            else if (oa_set.size() != 0)
+            else
             {
                 agregats = oa_set[*it];
                 cout << oa_set[*it].at(0);
@@ -188,7 +201,7 @@ Figure* Dessin::Create_figure( vector<string> cmd )
 
         else
         {
-            return fig;
+            return NULL;
         }
          fig->Set_type(cmd[0]);
          for(int i=2;i<cmd.size();i++)
@@ -202,8 +215,16 @@ Figure* Dessin::Create_figure( vector<string> cmd )
 
 bool Dessin::Move(string figure_name, int dx, int dy )
 {
-    if ( figure_set.find(figure_name) == figure_set.end() )
-        { return false; }
+    if( figure_set.find(figure_name) == figure_set.end() )
+    {
+        if( oa_set.find(figure_name) == oa_set.end() )
+            return false;
+        else
+        {
+            for( itvstr i=oa_set[figure_name].begin(); i != oa_set[figure_name].end(); i++)
+                figure_set[*i]->Move(dx, dy);
+        }
+    }
     else
         { figure_set[figure_name]->Move(dx, dy); }
     return true;
