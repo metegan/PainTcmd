@@ -1,0 +1,2 @@
+analog: -t: nombre incorrect
+Usage: analog [OPTION]... <file.log>

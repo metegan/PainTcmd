@@ -1,0 +1,10 @@
+digraph {
+node3 [label="www.google.fr"];
+node2 [label="/page.php"];
+node1 [label="-"];
+node0 [label="temps"];
+node3 -> node0 [label="1"];
+node0 -> node0 [label="1"];
+node0 -> node2 [label="1"];
+node1 -> node0 [label="2"];
+}
