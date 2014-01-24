@@ -13,10 +13,9 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
-#include "Figure.h"
+#include "Objet.h"
 //--------------------------------------------------- Types personnels
-typedef unordered_map<string,Figure*>::iterator iter;
-typedef unordered_map<string,vector<string>>::iterator itoa;
+typedef unordered_map<string,Objet*>::iterator iter;
 typedef vector<string>::iterator itvstr;
 
 using namespace std;
@@ -32,14 +31,10 @@ class Dessin
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Add ( Figure* new_figure, string figure_name );
+    bool Add ( Objet* new_objet, string objet_name );
     // Mode d'emploi :
-    //  Ajoute la figure passé en paramètre au dessin
+    //  Ajoute la objet passé en paramètre au dessin
     //  Retourne Faux si l'ajout a échoué
-
-    bool Add_oa( vector<string> cmd_split );
-    //Mode d'emploi:
-    //
 
     bool Save( string file_name ); //TODO save only modifications
     // Mode d'emploi :
@@ -48,32 +43,32 @@ public:
 
     bool Load( string file_name, string cmd); //TODO save only modifications
     // Mode d'emploi :
-    //  Charge les figures contenues dans le fichier passé en paramètre
+    //  Charge les objets contenues dans le fichier passé en paramètre
     //  Retourne Faux si le chargement a échoué
 
-    bool Delete( string figure_name );
+    bool Delete( string objet_name );
     // Mode d'emploi :
-    //  Supprime du dessin la figure passée en paramètre
+    //  Supprime du dessin la objet passée en paramètre
     //  Retourne Faux si la suppression a échoué
     // Contrat :
     //  La méthode se charge de vérifier si la igure existe ou non.
 
     bool Clear( );
     // Mode d'emploi :
-    //  Supprime toutes les figures du dessin courant
+    //  Supprime toutes les objets du dessin courant
     //  Retourne Faux si la suppression a échoué
 
     void Display( );
     // Mode d'emploi :
     //  Affiche les commandes qui ont généré le dessin
 
-    Figure* Create_figure( vector<string> cmd );
+    Objet* Create_objet( vector<string> cmd );
     // Mode d'emploi :
-    //  Crée la figure correspondante et la retourne
+    //  Crée la objet correspondante et la retourne
 
-    bool Move(string figure_name, int dx, int dy );
+    bool Move(string objet_name, int dx, int dy );
     // Mode d'emploi :
-    //  Supprime toutes les figures du dessin courant
+    //  Supprime toutes les objets du dessin courant
     //  Retourne Faux si la suppression a échoué
     void Set_last_cmd(vector<string> cmd);
     // Mode d'emploi :
@@ -82,6 +77,10 @@ public:
     // Mode d'emploi :
     //  Retourne la dernière commande qui a modifié le dessin
     void Undo();
+
+    vector<string> Redo();
+
+    int gs(){ return objet_set.size(); };
 
 //-------------------------------------------- Constructeurs - destructeur
     Dessin ( );
@@ -93,13 +92,12 @@ public:
 private:
 //----------------------------------------------------- Attributs protégés
 
-    vector<string> last_cmd;
-    Figure* last_erased;
-    unordered_map<string, Figure*> figure_set; // ensemble des figures
+    int cpt_undo;
+    vector< vector<string> > last_cmd;
+    vector< pair<Objet*, vector<string>> > last_erased;
+    unordered_map<string, Objet*> objet_set; // ensemble des objets
                                                   // qui constituent les dessin
-    unordered_map<string, Figure*> old_figure_set; // ensemble des figures
-                                                  // qui constituent les dessin
-    unordered_map<string, vector<string>> oa_set; //ensemble des objets agrégés
+    unordered_map<string, Objet*> old_objet_set; // ancien ensemble des objets
 
 };
 

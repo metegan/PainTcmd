@@ -1,74 +1,69 @@
 /*************************************************************************
-                           Figure  -  description
+                           Objet  -  description
                              -------------------
     début                : 11 oct. 2013
     copyright            : (C) 2013 par hhannetel
 *************************************************************************/
 
-//---------- Interface de la classe <Figure> (fichier Figure.h) ------
-#if ! defined ( FIGURE_H_ )
-#define FIGURE_H_
+//---------- Interface de la classe <Objet> (fichier Objet.h) ------
+#if ! defined ( OBJET_H_ )
+#define OBJET_H_
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <vector>
-#include "Objet.h"
-#include "Point.h"
 using namespace std;
 
-typedef vector<Point>::iterator itv;
 
 
 
 
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Figure>
+// Rôle de la classe <Objet>
 //
 //------------------------------------------------------------------------
 
-class Figure : public Objet
+class Objet
 {
 //----------------------------------------------------------------- PUBLIC
 
 public:
 //----------------------------------------------------- Méthodes publiques
 
-    bool Move ( int x, int y );
+    virtual bool Move ( int x, int y ) = 0;
     // Mode d'emploi :
-    //  déplace la figure de x en abscisse et y en ordonnée
+    //  déplace la objet de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible
 
-    string Get_cmd( Objet* obj, string name );
+    virtual string Get_cmd( Objet* obj, string name ) = 0;
     // Mode d'emploi :
-    //  génère la commande qui a permis la création la figure
+    //  génère la commande qui a permis la création la objet
 
-
-    void Add_point( Point& p );
 
     void Set_type( string t );
 
+    string Get_type();
+
 
 //-------------------------------------------- Constructeurs - destructeur
-    Figure ( vector<string> cmd );
 
-    Figure ();
+    Objet ();
 
-    virtual ~Figure ( );
+    virtual ~Objet ( );
 
 
 //------------------------------------------------------------------ PRIVE
 protected:
 //----------------------------------------------------- Attributs protégés
-
-
-	vector<Point> set_of_points; // points qui définissent la figure
+   	string type; // type de l'objet
 
 
 };
 
-//--------------------------- Autres définitions dépendantes de <Figure>
+//--------------------------- Autres définitions dépendantes de <Objet>
 
-#endif // FIGURE_H_
+#endif // OBJET_H_
+
 
 

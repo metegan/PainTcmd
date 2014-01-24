@@ -44,7 +44,7 @@ using namespace std;
         type=t;
     }
 
-    string Figure::Get_cmd( Figure* fig, string name )
+    string Figure::Get_cmd( Objet* obj, string name )
     {
         string cmd = type + " " + name;
         for(itv i = set_of_points.begin(); i != set_of_points.end(); i++)
@@ -53,7 +53,7 @@ using namespace std;
         }
         if(!type.compare("C"))
         {
-            Cercle* cer=(Cercle*)fig;
+            Cercle* cer=(Cercle*)obj;
             string rayon=cer->Get_radius();
             return cmd + " " + rayon;
         }

@@ -1,5 +1,5 @@
 Test ID;Return code validation;Out result;StdErr result;File creation result;Global result
-Test;2;1;1;2;1
+Test;2;0;1;2;0
 Test1;2;1;1;2;1
 Test10;2;2;0;2;0
 Test11;2;2;0;2;0
@@ -19,6 +19,5 @@ Test3;2;1;1;2;1
 Test4;2;1;1;2;1
 Test5;2;1;1;2;1
 Test6;2;1;1;2;1
-Test7;2;1;1;2;1
-Test8;2;2;0;2;0
-Test9;2;2;0;2;0
+Test7;2;0;0;2;0
+Test8;2;1;1;2;1

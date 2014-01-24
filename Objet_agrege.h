@@ -1,33 +1,32 @@
 /*************************************************************************
-                           Figure  -  description
+                           Objet_agrege  -  description
                              -------------------
     début                : 11 oct. 2013
     copyright            : (C) 2013 par hhannetel
 *************************************************************************/
 
-//---------- Interface de la classe <Figure> (fichier Figure.h) ------
-#if ! defined ( FIGURE_H_ )
-#define FIGURE_H_
+//---------- Interface de la classe <Objet_agrege> (fichier Objet_agrege.h) ------
+#if ! defined ( OBJET_AGREGE_H_ )
+#define OBJET_AGREGE_H_
 
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <vector>
-#include "Objet.h"
-#include "Point.h"
-using namespace std;
 
-typedef vector<Point>::iterator itv;
+#include "Objet.h"
+#include "Dessin.h"
+using namespace std;
 
 
 
 
 
 //------------------------------------------------------------------------
-// Rôle de la classe <Figure>
+// Rôle de la classe <Objet_agrege>
 //
 //------------------------------------------------------------------------
 
-class Figure : public Objet
+class Objet_agrege : public Objet
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -36,25 +35,23 @@ public:
 
     bool Move ( int x, int y );
     // Mode d'emploi :
-    //  déplace la figure de x en abscisse et y en ordonnée
+    //  déplace la objet_agrege de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible
 
     string Get_cmd( Objet* obj, string name );
     // Mode d'emploi :
-    //  génère la commande qui a permis la création la figure
+    //  génère la commande qui a permis la création la objet_agrege
 
-
-    void Add_point( Point& p );
-
-    void Set_type( string t );
+    vector<string>* Get_objets_names( );
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    Figure ( vector<string> cmd );
 
-    Figure ();
+    Objet_agrege ( vector<string> cmd, Dessin* pere );
 
-    virtual ~Figure ( );
+    Objet_agrege ( );
+
+    virtual ~Objet_agrege ( );
 
 
 //------------------------------------------------------------------ PRIVE
@@ -62,13 +59,15 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 
-	vector<Point> set_of_points; // points qui définissent la figure
+   	vector<string> objets; // liste des objets qui composent l'OA
+   	Dessin* dessin_pere;
 
 
 };
 
-//--------------------------- Autres définitions dépendantes de <Figure>
+//--------------------------- Autres définitions dépendantes de <Objet_agrege>
 
-#endif // FIGURE_H_
+#endif // OBJET_AGREGE_H_
+
 
 
