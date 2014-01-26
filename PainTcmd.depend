@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1390591556 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Dessin.cpp
+1390772222 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Dessin.cpp
 	<string>
 	<utility>
 	<iostream>
@@ -14,7 +14,7 @@
 	"ligne.h"
 	"Objet_agrege.h"
 
-1390563021 /home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Dessin.h
+1390772222 /home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Dessin.h
 	<unordered_map>
 	<string>
 	<vector>
@@ -52,13 +52,15 @@
 	"Figure.h"
 	<string>
 
-1390566907 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/main.cpp
+1390769052 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/main.cpp
 	<string>
 	<sys/stat.h>
 	"Dessin.h"
 	"Figure.h"
 	"StringExt.h"
 	<iostream>
+	<cstdlib>
+	<fstream>
 
 1390214023 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/StringExt.cpp
 	"StringExt.h"
@@ -100,12 +102,12 @@
 1390560162 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Objet.cpp
 	"Objet.h"
 
-1390566795 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Objet_agrege.cpp
+1390774234 source:/home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Objet_agrege.cpp
 	<iostream>
 	<stdlib.h>
 	"Objet_agrege.h"
 
-1390559246 /home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Objet_agrege.h
+1390771785 /home/hh/Bureau/INSA/Génie_logiciel/PainTcmd/Objet_agrege.h
 	<string>
 	<vector>
 	"Objet.h"

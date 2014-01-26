@@ -41,12 +41,12 @@ public:
     //  Enregistre le dessin dans le fichier passé en paramètre
     //  Retourne Faux si l'enregistrement a échoué
 
-    bool Load( string file_name, string cmd); //TODO save only modifications
+    bool Load( string file_name, string & cmd); //TODO save only modifications
     // Mode d'emploi :
     //  Charge les objets contenues dans le fichier passé en paramètre
     //  Retourne Faux si le chargement a échoué
 
-    bool Delete( string objet_name );
+    bool Delete( vector<string> objet_name );
     // Mode d'emploi :
     //  Supprime du dessin la objet passée en paramètre
     //  Retourne Faux si la suppression a échoué
@@ -76,9 +76,14 @@ public:
     //vector<string> Get_last_cmd();
     // Mode d'emploi :
     //  Retourne la dernière commande qui a modifié le dessin
+    int Get_last_cmd_len();
     void Undo();
 
     vector<string> Redo();
+
+    vector<string> Get_already_moved();
+
+    void Add_already_moved(string nom);
 
    // int gs();
 
@@ -98,6 +103,7 @@ private:
     unordered_map<string, Objet*> objet_set; // ensemble des objets
                                                   // qui constituent les dessin
     unordered_map<string, Objet*> old_objet_set; // ancien ensemble des objets
+    vector<string> already_moved;
 
 };
 

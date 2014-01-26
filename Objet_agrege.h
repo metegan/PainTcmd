@@ -34,6 +34,7 @@ public:
 //----------------------------------------------------- Méthodes publiques
 
     bool Move ( int x, int y );
+    bool Move ( int x, int y, string name );
     // Mode d'emploi :
     //  déplace la objet_agrege de x en abscisse et y en ordonnée
     //  retourne 0 si le déplacement est impossible
@@ -41,6 +42,7 @@ public:
     string Get_cmd( Objet* obj, string name );
     // Mode d'emploi :
     //  génère la commande qui a permis la création la objet_agrege
+    bool Add( string name );
 
     vector<string>* Get_objets_names( );
 

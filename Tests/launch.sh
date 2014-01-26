@@ -1,4 +1,4 @@
 #!/bin/bash
-rm -f ~/Desktop/PainTcmd/Tests/PainTcmd
-cp ~/Desktop/PainTcmd/bin/Debug/PainTcmd ~/Desktop/PainTcmd/Tests/
+rm -f ~/Bureau/INSA/Génie_logiciel/PainTcmd/Tests/PainTcmd
+cp ~/Bureau/INSA/Génie_logiciel/PainTcmd/bin/Debug/PainTcmd ~/Bureau/INSA/Génie_logiciel/PainTcmd/Tests/
 

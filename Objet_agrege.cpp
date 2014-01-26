@@ -41,6 +41,51 @@ using namespace std;
 
     }
 
+    bool Objet_agrege::Move ( int x, int y, string name )
+    {
+        vector<string> already_moved = dessin_pere->Get_already_moved();
+        dessin_pere->Add_already_moved(name);
+                cout << "Add " << name << endl;
+        if( already_moved.size() < 1 )
+        {
+            for(unsigned int i = 0; i < objets.size(); i++)
+            {
+                if( !dessin_pere->Move(objets[i],x,y) ) return false;
+            }
+        }
+        else
+        {
+            for(unsigned int i = 0; i < objets.size(); i++)
+            {
+                for( int j=0; j<already_moved.size(); j++ )
+                {
+                    cout <<"j " << j << endl;
+                    cout <<"already_moved.size() " << already_moved.size()-1 << endl;
+                    cout << "passé " << already_moved[j] << endl;
+                    if( !name.compare(already_moved[j]) )
+                        return false;
+                    cout << "passé0" << already_moved[j] << endl;
+                    if( !objets[i].compare(already_moved[j]) )
+                        break;
+                    if( j == already_moved.size()-1 )
+                    {
+                        if( !dessin_pere->Move(objets[i],x,y) )
+                            return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    bool Objet_agrege::Add( string name )
+    {
+        objets.push_back(name);
+        return true;
+    }
+
     vector<string>* Objet_agrege::Get_objets_names( ) { return &objets; }
 
 //-------------------------------------------- Constructeurs - destructeur

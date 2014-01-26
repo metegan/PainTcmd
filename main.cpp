@@ -11,11 +11,21 @@ using namespace std;
 
 
 bool is_nr ( string s)
+// contrat : l'utilisateur s'assure que la chaîne est non vide
 {
-    for(unsigned int i=0; i< s.size(); i++)
-        if(!(s[i]=='0'||s[i]=='1'||s[i]=='2'||s[i]=='3'||s[i]=='4'||s[i]=='5'||s[i]=='6'||s[i]=='7'||s[i]=='8'||s[i]=='9'))
+    if( (s[0] < 48 || s[0] > 57) && s[0] != 45 )
+    {
+    // ni un chiffre ni le signe moins
         return false;
-     return true;
+        }
+
+    for( unsigned int i=1; i< s.size(); i++)
+    {
+        if( s[i] < 48 || s[i] > 57 )
+            return false;
+    }
+    cout << "Prob" << endl;
+    return true;
 }
 
 
@@ -49,12 +59,13 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
                 else if( i == 1 )
                 {
                        // un seul param apres le nom de la commande, le nom d'un fichier
-                    if( (int)cmd_split.size() != 2 ) return false;
+                    if( (int)cmd_split.size() != 2 )
+                        return false;
 
-                    if( stat( cmd_split[1].c_str(), &working_dir ) )
+                    if( !cmd_split[0].compare("LOAD") && stat( cmd_split[1].c_str(), &working_dir ) )
                     {
-                        cout << "ERR" << endl;
-                        cout << "# Fichier " << cmd_split[1] << " non trouvé" <<endl;
+                        cerr << "ERR" << endl;
+                        cerr << "# Fichier " << cmd_split[1] << "non trouvé" <<endl;
                         return false;
                     }
                     return true;
@@ -66,11 +77,12 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
                     {
                           // Creation of a circle
                         nb_params = 5;
-                        if( (int)cmd_split.size() != nb_params ) return false;
-                        if(atoi(cmd_split.back().c_str())<0)
+                        if( (int)cmd_split.size() != nb_params )
+                            return false;
+                        if( atoi(cmd_split.back().c_str()) < 0 )
                         {
-                            cout << "ERR" << endl;
-                            cout << "# Le rayon d'un cercle ne peut pas etre negativ "<<endl;
+                            cerr << "ERR" << endl;
+                            cerr << "# Le rayon d'un cercle ne peut pas être negatif" << endl;
                             return false;
                         }
                         return true;
@@ -98,7 +110,7 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
 
                         if(cmd_split.size() % 2 != 0) //chaque point a 2 coord => nombre pair de parametres int
                             {
-                                cout<<"# nombre impaire de parametres "<<endl;
+                                cerr<<"# nombre impaire de parametres"<<endl;
                                 return false;
                             }
 
@@ -107,7 +119,7 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
 
                             if( ! is_nr(cmd_split[k]) )
                             {
-                                cout<<"# attention il faut introduire des coordonnes "<<endl;
+                                cerr<<"# attention il faut introduire des coordonnes"<<endl;
                                 return false;
                             }
 
@@ -122,7 +134,7 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
                             return false;
                         if( !cmd_split[0].compare("OA") && cmd_split.size() < 4 )
                             return false;
-                        for( int k=2; k < (int)cmd_split.size(); k++ )
+                        for( unsigned int k=2; k < cmd_split.size(); k++ )
                         {
                             if( is_nr(cmd_split[k]) )
                                 return false;
@@ -153,47 +165,52 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
 int main()
 {
 
-   /* string cd="PL p ";
-    for(unsigned int i=0;i<=10;i++)
-    cd+=to_string(i)+ " ";
+   string cd="PL p 12 12 12 12\n";
+   string oa="OA o p";
+    for(unsigned int i=1;i<=1000000;i++)
+    {
+        cd+="PL p"+to_string(i)+" 12 12 12 12\n";
+        oa+=" p"+to_string(i);
+    }
+    oa+="\n";
     //cout<<cd;
     ofstream fichier("PL.txt", ios::out | ios::trunc);  // ouverture en écriture avec effacement du fichier ouvert
     if(fichier)
     {
        fichier<<cd;
+       fichier<<oa;
     }
-    //fichier.close(); */
+    fichier.close();
 
 
 
 
-     vector< vector<string> > cmd_type =
+    vector< vector<string> > cmd_type =
     {
-    { "LIST","UNDO","REDO", "EXIT", "CLEAR" }, // commands with no parameters
-    { "LOAD","SAVE" }, // commands with one string parameter (file)
-    { "C" }, // commands with one string and 3 int parameters
-    { "R","L"}, // commands with one string and 4 int parameters
-    { "PL" }, // commands with one string and n int parameters
-    { "DELETE","OA" },// commands with n string parameters
-    { "MOVE" } // commands with one string parameter and 2 int
-
+        { "LIST","UNDO","REDO", "EXIT", "CLEAR" }, // commands with no parameters
+        { "LOAD","SAVE" }, // commands with one string parameter (file)
+        { "C" }, // commands with one string and 3 int parameters
+        { "R","L"}, // commands with one string and 4 int parameters
+        { "PL" }, // commands with one string and n int parameters
+        { "DELETE","OA" },// commands with n string parameters
+        { "MOVE" } // commands with one string parameter and 2 int
     };
 
 
     Dessin* dessin = new Dessin();
-    char cmdd[256];
+    char cmdd[1200];
     string cmd;
     string figure_name;
     Objet* new_obj;
     vector<string> cmd_split;
+    vector<string> o_to_delete;
     bool change;
 
 
     for( ;; )
     {
-
         change=true;
-        cin.getline(cmdd, 256);
+        cin.getline(cmdd, 1200);
         cmd = string(cmdd);
         cmd_split = split(cmd, ' ');
 
@@ -204,9 +221,16 @@ int main()
             if(!cmd_split[0].compare("REDO") )
             {
                 change=false;
-                cmd_split = dessin->Redo();
+                if( dessin->Get_last_cmd_len() > 0 )
+                    cmd_split = dessin->Redo();
+                else
+                {
+                    cerr << "ERR" << endl;
+                    cerr << "# REDO can be done after UNDO only" << endl;
+                    continue;
+                }
             }
-            else if( !cmd_split[0].compare("EXIT") )
+            if( !cmd_split[0].compare("EXIT") )
             {
                 break;
             }
@@ -220,6 +244,7 @@ int main()
                 change=false;
                 dessin->Display( );
             }
+
             else if(!cmd_split[0].compare("MOVE") )
             {
                 if(  dessin->Move( cmd_split[1], atoi(cmd_split[2].c_str()), atoi(cmd_split[3].c_str()) ) )
@@ -231,23 +256,26 @@ int main()
                 {
                     cout << "ERR" << endl;
                     cout << "# Object " << cmd_split[1] << " unknown" << endl;
-
                 }
 
             }
+
             else if( !cmd_split[0].compare("SAVE") )
             {
                 change=false;
                 dessin->Save( cmd_split[1]);
             }
+
             else if(!cmd_split[0].compare("DELETE") )
             {
-                for( int i=1; i<(int)cmd_split.size(); i++ )
+                for( int i=1; i < (int)cmd_split.size(); i++ )
                 {
-                    if( ! dessin->Delete(cmd_split[i]) )
+                    o_to_delete = vector<string>();
+                    o_to_delete.push_back(cmd_split[i]);
+                    if( ! dessin->Delete(o_to_delete) )
                     {
-                        cout << "ERR" << endl;
-                        cout << "# Object " << cmd_split[i] << " unknown" << endl;
+                        cerr << "ERR" << endl;
+                        cerr << "# Object " << cmd_split[i] << " unknown" << endl;
                     }
                     else
                     {
@@ -266,16 +294,26 @@ int main()
 
             else if( !cmd_split[0].compare("UNDO") )
             {
-                dessin->Undo();
-                cout << "OK" << endl;
+                change=false;
+                if( dessin->Get_last_cmd_len() > 0 )
+                {
+                    dessin->Undo();
+                    cout << "OK" << endl;
+                }
+                else
+                {
+                    cerr << "ERR" << endl;
+                    cerr << "# You must write a command at first" << endl;
+                }
             }
 
-            else {
+            else
+            {
                 new_obj = dessin->Create_objet(cmd_split);
                 if( ! dessin->Add( new_obj, cmd_split[1] ) )
                 {
-                    cout << "ERR" << endl;
-                    cout << "# Invalid parameters" << endl;
+                    cerr << "ERR" << endl;
+                    cerr << "# Invalid parameters" << endl;
                     continue;
                 }
                 else
@@ -287,8 +325,8 @@ int main()
         }
 
         else { //les parametres ne sont pas valids
-            cout << "ERR" << endl;
-            cout << "# Invalid parameters" << endl;
+            cerr << "ERR" << endl;
+            cerr << "# Invalid parameters" << endl;
             //continue;
         }
 

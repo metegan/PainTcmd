@@ -32,38 +32,56 @@ using namespace std;
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-bool Dessin::Delete ( string nom_objet )
+bool Dessin::Delete ( vector<string> nom_objet)
 // Algorithme :
 //
 {
     vector<string>* objets_names;
-    bool to_erase = false;
+    string name;
+    Objet* new_obj;
+    Objet* old_objet;
 
-    if( objet_set.find( nom_objet ) == objet_set.end() )
-        return false;
+    if( nom_objet.size() < 2 )
+    {
+        if( objet_set.find( nom_objet[0] ) == objet_set.end() )
+            return false;
 
-    last_erased.push_back( make_pair( objet_set[nom_objet], vector<string>() ) );
-    objet_set.erase( nom_objet );
-
-    for( iter it = objet_set.begin(); it != objet_set.end(); it++)
+        old_objet = objet_set[nom_objet[0]];
+        new_obj = Create_objet( split( old_objet->Get_cmd( old_objet, last_cmd.back()[1] ), ' ') );
+        last_erased.push_back( make_pair( new_obj, vector<string>() ) );
+        delete objet_set[nom_objet[0]];
+        objet_set.erase( nom_objet[0] );
+    }
+    cout << "passé" << endl;
+    for( iter it = objet_set.begin(); it != objet_set.end(); it++ )
     {
         if( ! it->second->Get_type().compare("OA") )
         {
             objets_names = ((Objet_agrege*)it->second)->Get_objets_names();
             for( unsigned int i=0; i < objets_names->size(); i++ )
             {
-                if( ! (*objets_names)[i].compare(nom_objet) )
+                for( unsigned int j=0; j < nom_objet.size(); j++ )
                 {
-                    to_erase = true;
-                    objets_names->erase( objets_names->begin() + i-- );
+                    if( ! (*objets_names)[i].compare(nom_objet[j]) )
+                    {
+                        last_erased.back().second.push_back( nom_objet[j] );
+                        objets_names->erase( objets_names->begin() + i-- );
+                    }
                 }
             }
-            if( to_erase )
-            // Ajout de l'OA à la liste des OA qui contenaient l'objet supprimé
-                last_erased.back().second.push_back( it->first );
             if( objets_names->size() < 2 )
-                objet_set.erase(it++);
-            to_erase = false;
+            // Ajout de l'OA à la liste des OA qui contenaient l'objet supprimé
+            {
+                last_erased.back().second.push_back( (*objets_names)[0] );
+                //delete objets_names;
+                last_erased.back().second.push_back( it->first+" OA" );
+                name = it->first;
+                delete it->second;
+                objet_set.erase( it );
+                nom_objet.push_back(name);
+                Delete(nom_objet);
+                break;
+            }
         }
     }
 
@@ -82,7 +100,7 @@ bool Dessin::Add ( Objet* new_objet, string objet_name )
 }
 
 
-bool Dessin::Load ( string file_name, string cmd)
+bool Dessin::Load ( string file_name, string  &cmd)
 // Algorithme :
 //
 {
@@ -109,11 +127,11 @@ bool Dessin::Load ( string file_name, string cmd)
 
 bool Dessin::Save( string file_name )
 {
-    ofstream fichier(file_name, ios::out | ios::trunc);  // ouverture en écriture avec effacement du fichier ouvert
-    if(fichier)
+    ofstream fichier( file_name, ios::out | ios::trunc );  // ouverture en écriture avec effacement du fichier ouvert
+    if( fichier.is_open() )
     {
         for(iter it = objet_set.begin(); it != objet_set.end(); it++)
-            fichier<<it->second->Get_cmd(it->second,it->first)<<endl;
+            fichier << it->second->Get_cmd(it->second,it->first) << endl;
         fichier.close();
         cout<<"OK"<<endl;
         return true;
@@ -145,7 +163,7 @@ Objet* Dessin::Create_objet( vector<string> cmd )
 
         if(!cmd[0].compare("OA"))
         {
-            obj=new Objet_agrege( cmd, this);
+            obj = new Objet_agrege( cmd, this);
             obj->Set_type(cmd[0]);
             return obj;
         }
@@ -184,7 +202,12 @@ Objet* Dessin::Create_objet( vector<string> cmd )
 bool Dessin::Move(string objet_name, int dx, int dy )
 {
     if( objet_set.find(objet_name) != objet_set.end() )
-        objet_set[objet_name]->Move(dx, dy);
+    {
+        if( !split( objet_set[objet_name]->Get_cmd( objet_set[objet_name], objet_name ), ' ')[0].compare("OA") )
+            ((Objet_agrege*)objet_set[objet_name])->Move(dx, dy, objet_name);
+        else
+            objet_set[objet_name]->Move(dx, dy);
+    }
     else
         return false;
     return true;
@@ -201,17 +224,18 @@ void Dessin::Set_last_cmd(vector<string> cmd)
 
 void Dessin::Undo()
 {
-        Objet* new_obj;
+        pair<Objet*, vector<string>> new_obj;
         vector<string> undo_cmd;
+        vector<string> new_oa;
+        vector<string> o_to_delete;
 
-        if( ++cpt_undo > 1 )
+        if( ++cpt_undo > 1 && last_cmd.size() > 1 )
+        {
             last_cmd.pop_back();
+            cpt_undo--;
+        }
 
-        //if( last_cmd.size() == 1 )
         undo_cmd = last_cmd.back();
-        //else
-           // undo_cmd = last_cmd[last_cmd.size()-2];
-
 
         if( !undo_cmd[0].compare("LOAD") )
         {
@@ -224,7 +248,8 @@ void Dessin::Undo()
                 while( getline(file,cmd) )
                 {
                     cmd_split = split(cmd, ' ');
-                    Delete(cmd_split[1]);
+                    o_to_delete.push_back(cmd_split[1]);
+                    Delete(o_to_delete);
                     cout << "# Object " << cmd_split[1] << " deleted" << endl;
                 }
              }
@@ -239,28 +264,60 @@ void Dessin::Undo()
         {
             for( int i=1; i<(int)last_cmd.back().size(); i++ )
             {
-                cout << last_erased.back().first->Get_cmd( last_erased.back().first, last_cmd.back()[1] ) << endl;
-                new_obj = Create_objet( split( last_erased.back().first->Get_cmd( last_erased.back().first, last_cmd.back()[1] ), ' ') );
-                Add(new_obj, undo_cmd[i]);//TODO ecraser reellement en memoire pas juste pointeur
+
+                new_obj = last_erased.back();
+                Add(new_obj.first, undo_cmd[i]);
+                for( int k=0; k<new_obj.second.size(); k++ )
+                    cout << new_obj.second[k] << endl;
+                while( new_obj.second.size() > 0 )
+                {
+                    new_oa = vector<string>();
+                    if( split( new_obj.second.back(), ' ').size() > 1 )
+                    {
+                        new_oa.push_back( split( new_obj.second.back(), ' ')[1] );
+                        new_oa.push_back( split( new_obj.second.back(), ' ')[0] );
+                        new_obj.second.pop_back();
+                        while( new_obj.second.size() > 0 && split( new_obj.second.back(), ' ').size() < 2  )
+                        {
+                            new_oa.push_back( new_obj.second.back() );
+                            new_obj.second.pop_back();
+                        }
+                        Add( Create_objet(new_oa), new_oa[1] );
+                    }
+                    else
+                    {
+                        ((Objet_agrege*)objet_set[new_obj.second.back()])->Add( last_cmd.back()[i] );
+                        new_obj.second.pop_back();
+                    }
+                }
+                last_erased.pop_back();
             }
         }
 
         else if( !undo_cmd[0].compare("CLEAR") )
         {
             objet_set=old_objet_set;
-
         }
 
         else
-            Delete( undo_cmd[1] );
+        {
+            o_to_delete.push_back(undo_cmd[1]);
+            Delete( o_to_delete );
+        }
 }
 
 vector<string> Dessin::Redo()
 {
+    vector<string> last = last_cmd.back();
+    last_cmd.pop_back();
     cpt_undo--;
-    return last_cmd.back();
+    return last;
 }
 
+vector<string> Dessin::Get_already_moved() { return already_moved; };
+
+void Dessin::Add_already_moved(string nom) { already_moved.push_back(nom); }
+int Dessin::Get_last_cmd_len() { return last_cmd.size(); }
 //int gs() { return (int)objet_set.size(); }
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
