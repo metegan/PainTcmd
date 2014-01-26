@@ -206,7 +206,10 @@ bool Dessin::Move(string objet_name, int dx, int dy )
         if( !split( objet_set[objet_name]->Get_cmd( objet_set[objet_name], objet_name ), ' ')[0].compare("OA") )
             ((Objet_agrege*)objet_set[objet_name])->Move(dx, dy, objet_name);
         else
+        {
             objet_set[objet_name]->Move(dx, dy);
+            Add_already_moved(objet_name);
+        }
     }
     else
         return false;

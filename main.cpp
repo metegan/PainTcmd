@@ -24,7 +24,6 @@ bool is_nr ( string s)
         if( s[i] < 48 || s[i] > 57 )
             return false;
     }
-    cout << "Prob" << endl;
     return true;
 }
 
@@ -48,8 +47,6 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
         {
             if( ! cmd_split[0].compare(cmd_type[i][j] ) )
             {
-
-
                 if( i == 0 ) //commande avec 0 params
                 {
                     if( (int)cmd_split.size() != 1 )
