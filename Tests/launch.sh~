@@ -1,4 +1,4 @@
 #!/bin/bash
-rm -f ~/Desktop/PainTcmd/Tests/PainTcmd
+rm -f PainTcmd/Tests/PainTcmd
 cp ~/Desktop/PainTcmd/bin/Debug/PainTcmd ~/Desktop/PainTcmd/Tests/
 

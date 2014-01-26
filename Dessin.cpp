@@ -103,7 +103,7 @@ bool Dessin::Load ( string file_name, string cmd)
         return true;
     }
 
-    cerr << "# Impossible d'ouvrir le fichier !" << endl;
+    cout << "# Impossible d'ouvrir le fichier !" << endl;
     return false;
 }
 
@@ -119,7 +119,7 @@ bool Dessin::Save( string file_name )
         return true;
     }
 
-    cerr << "# Impossible d'ouvrir le fichier !" << endl;
+    cout << "# Impossible d'ouvrir le fichier !" << endl;
     return false;
 }
 
@@ -127,6 +127,8 @@ bool Dessin::Clear( )
 {
     old_objet_set=objet_set;
     objet_set.clear();
+    cout << "OK" << endl;
+    cout << "# Dessin réinitialisé" << endl;
     return true;
 }
 
@@ -171,7 +173,7 @@ Objet* Dessin::Create_objet( vector<string> cmd )
 
         obj->Set_type(cmd[0]);
         for( unsigned int i=2; i < cmd.size(); i+=2 )
-        {
+        {   //cout<<"da ";
             p=new Point( atoi(cmd[i].c_str()), atoi(cmd[i+1].c_str()) );
             ((Figure*)obj)->Add_point(*p);
         }
@@ -195,7 +197,7 @@ void Dessin::Set_last_cmd(vector<string> cmd)
     last_cmd.push_back(cmd);
 }
 
-vector<string> Dessin::Get_last_cmd() { return last_cmd.back(); }
+//vector<string> Dessin::Get_last_cmd() { return last_cmd.back(); }
 
 void Dessin::Undo()
 {
@@ -205,10 +207,10 @@ void Dessin::Undo()
         if( ++cpt_undo > 1 )
             last_cmd.pop_back();
 
-        if( last_cmd.size() == 1 )
-            undo_cmd = last_cmd.back();
-        else
-            undo_cmd = last_cmd[last_cmd.size()-2];
+        //if( last_cmd.size() == 1 )
+        undo_cmd = last_cmd.back();
+        //else
+           // undo_cmd = last_cmd[last_cmd.size()-2];
 
 
         if( !undo_cmd[0].compare("LOAD") )
@@ -223,6 +225,7 @@ void Dessin::Undo()
                 {
                     cmd_split = split(cmd, ' ');
                     Delete(cmd_split[1]);
+                    cout << "# Object " << cmd_split[1] << " deleted" << endl;
                 }
              }
         }
@@ -243,7 +246,11 @@ void Dessin::Undo()
         }
 
         else if( !undo_cmd[0].compare("CLEAR") )
+        {
             objet_set=old_objet_set;
+
+        }
+
         else
             Delete( undo_cmd[1] );
 }
@@ -251,9 +258,10 @@ void Dessin::Undo()
 vector<string> Dessin::Redo()
 {
     cpt_undo--;
-    return this->Get_last_cmd();
+    return last_cmd.back();
 }
 
+//int gs() { return (int)objet_set.size(); }
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
 {

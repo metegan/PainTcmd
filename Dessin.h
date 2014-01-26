@@ -73,14 +73,14 @@ public:
     void Set_last_cmd(vector<string> cmd);
     // Mode d'emploi :
     //  Met à jour la dernière commande qui a modifié le dessin
-    vector<string> Get_last_cmd();
+    //vector<string> Get_last_cmd();
     // Mode d'emploi :
     //  Retourne la dernière commande qui a modifié le dessin
     void Undo();
 
     vector<string> Redo();
 
-    int gs(){ return objet_set.size(); };
+   // int gs();
 
 //-------------------------------------------- Constructeurs - destructeur
     Dessin ( );
