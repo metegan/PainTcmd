@@ -52,7 +52,6 @@ bool Dessin::Delete ( vector<string> nom_objet)
         delete objet_set[nom_objet[0]];
         objet_set.erase( nom_objet[0] );
     }
-    cout << "passé" << endl;
     for( iter it = objet_set.begin(); it != objet_set.end(); it++ )
     {
         if( ! it->second->Get_type().compare("OA") )
@@ -65,7 +64,7 @@ bool Dessin::Delete ( vector<string> nom_objet)
                     if( ! (*objets_names)[i].compare(nom_objet[j]) )
                     {
                         last_erased.back().second.push_back( nom_objet[j] );
-                        objets_names->erase( objets_names->begin() + i-- );
+                        objets_names->erase( objets_names->begin() + i );
                     }
                 }
             }
@@ -78,8 +77,18 @@ bool Dessin::Delete ( vector<string> nom_objet)
                 name = it->first;
                 delete it->second;
                 objet_set.erase( it );
-                nom_objet.push_back(name);
-                Delete(nom_objet);
+                for( unsigned int p=0; p<nom_objet.size(); p++ )
+                {
+                    if( !nom_objet[p].compare(name) )
+                    {
+                        break;
+                    }
+                    if( p == nom_objet.size()-1 )
+                    {
+                        nom_objet.push_back(name);
+                        Delete(nom_objet);
+                    }
+                }
                 break;
             }
         }
@@ -219,7 +228,9 @@ bool Dessin::Move(string objet_name, int dx, int dy )
 void Dessin::Set_last_cmd(vector<string> cmd)
 {
     if( last_cmd.size() > 19 )
+    {//TODO supprimer les objets/dessin
         last_cmd.erase( last_cmd.begin() );
+    }
     last_cmd.push_back(cmd);
 }
 
@@ -270,8 +281,6 @@ void Dessin::Undo()
 
                 new_obj = last_erased.back();
                 Add(new_obj.first, undo_cmd[i]);
-                for( int k=0; k<new_obj.second.size(); k++ )
-                    cout << new_obj.second[k] << endl;
                 while( new_obj.second.size() > 0 )
                 {
                     new_oa = vector<string>();
@@ -320,8 +329,9 @@ vector<string> Dessin::Redo()
 vector<string> Dessin::Get_already_moved() { return already_moved; };
 
 void Dessin::Add_already_moved(string nom) { already_moved.push_back(nom); }
+
 int Dessin::Get_last_cmd_len() { return last_cmd.size(); }
-//int gs() { return (int)objet_set.size(); }
+
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )
 {

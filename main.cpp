@@ -14,10 +14,8 @@ bool is_nr ( string s)
 // contrat : l'utilisateur s'assure que la chaîne est non vide
 {
     if( (s[0] < 48 || s[0] > 57) && s[0] != 45 )
-    {
     // ni un chiffre ni le signe moins
         return false;
-        }
 
     for( unsigned int i=1; i< s.size(); i++)
     {
@@ -161,24 +159,6 @@ bool valid_parameters( vector<string> cmd_split, vector<vector<string>> cmd_type
 }
 int main()
 {
-
-   string cd="PL p 12 12 12 12\n";
-   string oa="OA o p";
-    for(unsigned int i=1;i<=1000000;i++)
-    {
-        cd+="PL p"+to_string(i)+" 12 12 12 12\n";
-        oa+=" p"+to_string(i);
-    }
-    oa+="\n";
-    //cout<<cd;
-    ofstream fichier("PL.txt", ios::out | ios::trunc);  // ouverture en écriture avec effacement du fichier ouvert
-    if(fichier)
-    {
-       fichier<<cd;
-       fichier<<oa;
-    }
-    fichier.close();
-
 
 
 

@@ -1,5 +1,3 @@
-LOAD dessin.txt
-PL pl 1 2 3 3 3 3
-SAVE dessin2.txt
+LOAD PL.txt
 EXIT
 
