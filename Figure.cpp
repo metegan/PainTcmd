@@ -32,7 +32,11 @@ using namespace std;
 
     Figure::Figure ( ) { }
 
-    Figure::~Figure ( ) { }
+    Figure::~Figure ( ) {
+#ifdef MAP
+    cout << "Appel au destructeur de <Figure>" << endl;
+#endif
+}
 
     void Figure::Add_point( Point& p )
     {

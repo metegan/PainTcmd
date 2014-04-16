@@ -10,6 +10,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+
 using namespace std;
 #include <iostream>
 #include <stdlib.h>
@@ -51,7 +52,7 @@ using namespace std;
             {
                 if( already_moved.size() > 0 )
                 {
-                    for( int j=0; j<already_moved.size(); j++ )
+                    for(unsigned int j=0; j<already_moved.size(); j++ )
                     {
                         if( !objets[i].compare(already_moved[j]) )
                             break;
@@ -69,7 +70,7 @@ using namespace std;
         {
             for(unsigned int i = 0; i < objets.size(); i++)
             {
-                for( int j=0; j<already_moved.size(); j++ )
+                for(unsigned int j=0; j<already_moved.size(); j++ )
                 {
                     if( !name.compare(already_moved[j]) )
                         return false;
@@ -83,7 +84,6 @@ using namespace std;
                 }
             }
         }
-
         return true;
 
     }
@@ -106,7 +106,11 @@ using namespace std;
 
     Objet_agrege::Objet_agrege ( ) { }
 
-    Objet_agrege::~Objet_agrege ( ) { }
+    Objet_agrege::~Objet_agrege ( ) {
+#ifdef MAP
+    cout << "Appel au destructeur de <Objet_agrege>" << endl;
+#endif
+}
 
 //------------------------------------------------------------------ PRIVE
 

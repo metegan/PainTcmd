@@ -102,7 +102,7 @@ private:
     vector< pair<Objet*, vector<string>> > last_erased;
     unordered_map<string, Objet*> objet_set; // ensemble des objets
                                                   // qui constituent les dessin
-    unordered_map<string, Objet*> old_objet_set; // ancien ensemble des objets
+    vector<unordered_map<string, Objet*>> old_objet_set; // ancien ensemble des objets
     vector<string> already_moved;
 
 };

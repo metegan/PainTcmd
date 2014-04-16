@@ -6,7 +6,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
-
 using namespace std;
 
 
@@ -175,7 +174,7 @@ int main()
 
 
     Dessin* dessin = new Dessin();
-    char cmdd[1200];
+    char cmdd[255];
     string cmd;
     string figure_name;
     Objet* new_obj;
@@ -187,7 +186,7 @@ int main()
     for( ;; )
     {
         change=true;
-        cin.getline(cmdd, 1200);
+        cin.getline(cmdd, 255);
         cmd = string(cmdd);
         cmd_split = split(cmd, ' ');
 

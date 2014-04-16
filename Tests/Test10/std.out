@@ -1,0 +1,18 @@
+OK
+# New object : c1
+OK
+# New object : c2
+OK
+# New object : o1
+OK
+# New object : o2
+OK
+# New object : o3
+OK
+# Object o3 moved
+OA o3 o1 o2
+OA o2 o1 c1
+OA o1 c1 c2
+C c2 2 2 3
+C c1 1 1 2
+

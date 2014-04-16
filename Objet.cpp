@@ -13,8 +13,8 @@
 
 //------------------------------------------------------ Include personnel
 #include "Objet.h"
-
-
+#include <iostream>
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
@@ -29,7 +29,11 @@
 
     Objet::Objet ( ) { }
 
-    Objet::~Objet ( ) { }
+    Objet::~Objet ( ) {
+#ifdef MAP
+    cout << "Appel au destructeur de <Objet>" << endl;
+#endif
+}
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Méthodes protégées

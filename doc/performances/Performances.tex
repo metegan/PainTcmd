@@ -1,0 +1,30 @@
+\documentclass[legalpaper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{geometry}
+\geometry{ hmargin=2cm, vmargin=3cm }
+\usepackage[compact]{titlesec}
+
+\title{TP Héritage\\ Performances}
+\author{\textbf{Henri HANNETEL - Maria ETEGAN}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\textbf{Ajout d'objets :} \\
+\hspace*{\parindent}Comme les objets sont enregistrés dans un dictionnaire, leur insertion dans le dessin se fait en O(1) en moyenne. Il faut vérifier a préalable si l'objet n'existe pas déjà, et la recherche se faisant sur la clé on est aussi en O(1). Les objets agrégés sont constitué d'un vecteur de noms et les figures d'un vecteur de points. Il faut ajouter chaque élément au vecteur, la création d'objets est donc linéaire par rapport au nombre d'argument passés dans la commande, O(n). Au final, l'ajout d'un objet se fait en un temps O(n). En ce qui concerne l'espace, chaque objet dépend du nombre de paramètres, donc occupe un espace O(n). Dans les deux cas n correspond au nombre de paramètres de la commande passée. Il est intéressant de noter qu'un cercle par exemple qui prend exactement 4 paramètres sera ajouté en O(1).\\
+
+\textbf{Suppression d'objets :}\\
+\hspace*{\parindent}La suppression d'un objet du dictionnaire se fait en O(1), grâce à la fonction de hachage. Il faut ensuite parcourir chaque objet et vérifier si c'est un objet agrégé. L'opération se fait en O(n) où n est le nombre d'objets. Si l'objet est un objet agrégé on parcoure la liste des noms des objets qui le composent et on les comparent avec le nom de l'objet supprimé. l'opération dépend du nombre d'objets que contient l'objet agrégé, on est en O(m) et du nombre de caractères de chaque nom d'objet : on est en O(k) dans la majorité des cas où m est le nombre d'objets et k le nombre de caractères. Si les noms d'objets ont peu de caractères en commun, ou si les noms sont de longueur différente, la comparaison est beaucoup plus rapide et tend vers O(1). Enfin quand on supprime un objet agrégé car il ne contient plus qu'un seul objet, il faut aussi le supprimer de tous les objets agrégés ce qui prend un temps O(n). La suppression d'un objet se fait en un temps de O(m*k*n²) en moyenne. Pour améliorer ce résultat, on pourrait enregistrer la liste des objets agrégés contenant l'objet à supprimer, ce qui éviterait de parcourir tous les objets créés, mais la complexité spatiale serait augmentée. Pour un dessin qui contient un objet agrégé de 1 million de figures, le temps d'attente pour supprimer les objets n'est clairement pas acceptable, c'est une amélioration à apporter si l'application est vouée a être utilisée de cette manière.\\
+
+\textbf{Déplacement d'objets :}\\
+\hspace*{\parindent}Si l'objet est une figure le déplacement est en O(1), si c'est un objet agrégé le déplacement se fait en O(n) où n est le nombre de figures contenue dans l'objet agrégé et dans les objets agrégés fils. La complexité spatiale est O(m) où m est le nombre d'objets à déplacer qui sont dans un objet agrégé.\\
+
+\textbf{Annulation de commande :}\\
+\hspace*{\parindent}La complexité temporelle d'un \textit{UNDO} ou d'un \textit{REDO} est O(n) où n est le nombre d'objets modifiés. En ce qui concerne la complexité spatiale, elle est de O(m) pour un \textit{UNDO} où m est la taille du dessin avant remise à zéro, car on le garde en mémoire (temporairement). Pour une suppression elle est en O(p) où p est la taille occupée par les figures supprimées. Pour les autres commandes elle est en O(k) où k est la place occupée en mémoire par la commande.\\
+\end{document}

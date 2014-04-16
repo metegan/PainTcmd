@@ -152,8 +152,9 @@ bool Dessin::Save( string file_name )
 
 bool Dessin::Clear( )
 {
-    old_objet_set=objet_set;
-    objet_set.clear();
+    unordered_map<string, Objet*> new_objet_set;
+    old_objet_set.push_back(objet_set);
+    objet_set = new_objet_set;
     cout << "OK" << endl;
     cout << "# Dessin réinitialisé" << endl;
     return true;
@@ -227,8 +228,25 @@ bool Dessin::Move(string objet_name, int dx, int dy )
 
 void Dessin::Set_last_cmd(vector<string> cmd)
 {
-    if( last_cmd.size() > 19 )
+    if( last_cmd.size() > 2 )
     {//TODO supprimer les objets/dessin
+        if( !last_cmd.front()[0].compare("DELETE") )
+        {
+            if( !last_erased.front().first->Get_type().compare("OA") )
+                ((Objet_agrege*)last_erased.front().first)->~Objet_agrege();
+            else
+                ((Figure*)last_erased.front().first)->~Figure();
+            last_erased.erase( last_erased.begin() );
+        }
+        else if( !last_cmd.front()[0].compare("CLEAR") )
+        {
+            for( iter it = old_objet_set[0].begin(); it != old_objet_set[0].end(); it++ )
+            {
+                    delete (it->second);
+            }
+            old_objet_set[0].clear();
+            old_objet_set.erase( old_objet_set.begin() );
+        }
         last_cmd.erase( last_cmd.begin() );
     }
     last_cmd.push_back(cmd);
@@ -308,7 +326,7 @@ void Dessin::Undo()
 
         else if( !undo_cmd[0].compare("CLEAR") )
         {
-            objet_set=old_objet_set;
+            objet_set = old_objet_set.back();
         }
 
         else

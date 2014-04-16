@@ -1,0 +1,20 @@
+OK
+# New object : c1
+OK
+# New object : c2
+OK
+# New object : o1
+OK
+# New object : o2
+OK
+# New object : o3
+OK
+# Object c2 deleted
+C c1 2 2 2
+OK
+OA o1 c1 c2
+OA o3 o2 o1
+OA o2 c1 o1
+C c2 3 3 3
+C c1 2 2 2
+
