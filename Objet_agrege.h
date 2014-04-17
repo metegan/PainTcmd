@@ -44,7 +44,7 @@ public:
     //  génère la commande qui a permis la création la objet_agrege
     bool Add( string name );
 
-    vector<string>* Get_objets_names( );
+    set<string>* Get_objets_names( );
 
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -61,7 +61,7 @@ protected:
 //----------------------------------------------------- Attributs protégés
 
 
-   	vector<string> objets; // liste des objets qui composent l'OA
+   	set<string> objets; // liste des objets qui composent l'OA
    	Dessin* dessin_pere;
 
 

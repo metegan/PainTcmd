@@ -8,6 +8,13 @@
 #include <fstream>
 using namespace std;
 
+/*************************************************************************
+Pour chaque objet créé on lui affilie un numéro égal à la taille de la map
+
+Créer un tableau statique de n pointeurs sur objet
+à chaque fois qu'on rencontre un objet regarder son numéro
+ajouter son pointeur dans le tableau à cet indice.
+*/
 
 bool is_nr ( string s)
 // contrat : l'utilisateur s'assure que la chaîne est non vide
@@ -207,9 +214,7 @@ int main()
                 }
             }
             if( !cmd_split[0].compare("EXIT") )
-            {
                 break;
-            }
 
             else if( !cmd_split[0].compare("LOAD") )
             {
@@ -226,7 +231,7 @@ int main()
                 if(  dessin->Move( cmd_split[1], atoi(cmd_split[2].c_str()), atoi(cmd_split[3].c_str()) ) )
                 {
                     cout << "OK" << endl;
-                    cout << "# Object " << cmd_split[1] << " moved" << endl;
+                    //cout << "# Object " << cmd_split[1] << " moved" << endl;
                 }
                 else
                 {
@@ -256,7 +261,7 @@ int main()
                     else
                     {
                         cout << "OK" << endl;
-                        cout << "# Object " << cmd_split[i] << " deleted" << endl;
+                        //cout << "# Object " << cmd_split[i] << " deleted" << endl;
                     }
                 }
             }
@@ -295,7 +300,7 @@ int main()
                 else
                 {
                     cout << "OK" << endl;
-                    cout << "# New object : " << cmd_split[1] << endl;
+                    //cout << "# New object : " << cmd_split[1] << endl;
                 }
             }
         }

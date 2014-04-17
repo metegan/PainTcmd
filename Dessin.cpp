@@ -10,6 +10,7 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
+
 #include <string>
 #include <utility>
 #include <iostream>
@@ -36,7 +37,7 @@ bool Dessin::Delete ( vector<string> nom_objet)
 // Algorithme :
 //
 {
-    vector<string>* objets_names;
+    set<string>* objets_names;
     string name;
     Objet* new_obj;
     Objet* old_objet;
@@ -57,21 +58,21 @@ bool Dessin::Delete ( vector<string> nom_objet)
         if( ! it->second->Get_type().compare("OA") )
         {
             objets_names = ((Objet_agrege*)it->second)->Get_objets_names();
-            for( unsigned int i=0; i < objets_names->size(); i++ )
+            for(iterset it = objets_names->begin(); it != objets_names->end(); it++)
             {
                 for( unsigned int j=0; j < nom_objet.size(); j++ )
                 {
-                    if( ! (*objets_names)[i].compare(nom_objet[j]) )
+                    if( ! it->compare(nom_objet[j]) )
                     {
                         last_erased.back().second.push_back( nom_objet[j] );
-                        objets_names->erase( objets_names->begin() + i );
+                        objets_names->erase( it );
                     }
                 }
             }
             if( objets_names->size() < 2 )
             // Ajout de l'OA à la liste des OA qui contenaient l'objet supprimé
             {
-                last_erased.back().second.push_back( (*objets_names)[0] );
+                last_erased.back().second.push_back( *(objets_names->begin()) );
                 //delete objets_names;
                 last_erased.back().second.push_back( it->first+" OA" );
                 name = it->first;
@@ -156,14 +157,17 @@ bool Dessin::Clear( )
     old_objet_set.push_back(objet_set);
     objet_set = new_objet_set;
     cout << "OK" << endl;
-    cout << "# Dessin réinitialisé" << endl;
+    //cout << "# Dessin réinitialisé" << endl;
     return true;
 }
 
 void Dessin::Display( )
 {
+    set<string> ordered_cmd;
     for(iter it = objet_set.begin(); it != objet_set.end(); it++)
-        cout << it->second->Get_cmd( it->second,it->first ) << endl;
+        ordered_cmd.insert(it->second->Get_cmd( it->second, it->first ));
+    for(iterset it = ordered_cmd.begin(); it != ordered_cmd.end(); it++)
+        cout << *it<< endl;
 }
 
 Objet* Dessin::Create_objet( vector<string> cmd )
@@ -349,6 +353,8 @@ vector<string> Dessin::Get_already_moved() { return already_moved; };
 void Dessin::Add_already_moved(string nom) { already_moved.push_back(nom); }
 
 int Dessin::Get_last_cmd_len() { return last_cmd.size(); }
+
+int Dessin::Get_size() { return objet_set.size(); }
 
 //-------------------------------------------- Constructeurs - destructeur
 Dessin::Dessin ( )

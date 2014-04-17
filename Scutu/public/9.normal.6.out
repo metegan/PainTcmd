@@ -1,0 +1,28 @@
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+C Cercle1 20 21 100
+C Cercle2 100 100 100
+L Ligne1 10 10 20 20
+L Ligne2 1002 1000 12 1
+OA ObjAgr1 Cercle1 Cercle2 Ligne2
+OA ObjAgr2 Cercle2 Ligne1 Rectangle3
+OA ObjAgr3 Cercle1 Cercle2 ObjAgr1 ObjAgr2 PolyLigne2 Rectangle1
+PL PolyLigne1 1000 1000 10 1
+PL PolyLigne2 2 4 13 4 13 15 2 15 2 4 11 12
+R Rectangle1 1 2 12 13
+R Rectangle2 11 22 22 33
+R Rectangle3 10 20 12 13

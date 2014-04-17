@@ -27,16 +27,16 @@ using namespace std;
     string Objet_agrege::Get_cmd( Objet* obj, string name )
     {
         string cmd = type + " " + name;
-        for(unsigned int i = 0; i < objets.size(); i++)
-            cmd += " " + objets[i];
+        for(iterset it = objets.begin(); it != objets.end(); it++)
+            cmd += " " + *it;
 
         return cmd;
     }
 
     bool Objet_agrege::Move ( int x, int y )
     {
-        for(unsigned int i = 0; i < objets.size(); i++)
-            if( !dessin_pere->Move(objets[i],x,y) ) return false;
+        for(iterset it = objets.begin(); it != objets.end(); it++)
+            if( !dessin_pere->Move(*it,x,y) ) return false;
 
         return true;
 
@@ -48,37 +48,37 @@ using namespace std;
         dessin_pere->Add_already_moved(name);
         if( already_moved.size() < 1 )
         {
-            for(unsigned int i = 0; i < objets.size(); i++)
+            for(iterset it = objets.begin(); it != objets.end(); it++)
             {
                 if( already_moved.size() > 0 )
                 {
                     for(unsigned int j=0; j<already_moved.size(); j++ )
                     {
-                        if( !objets[i].compare(already_moved[j]) )
+                        if( !it->compare(already_moved[j]) )
                             break;
                         if( j == already_moved.size()-1 )
-                            if( !dessin_pere->Move(objets[i],x,y) ) return false;
+                            if( !dessin_pere->Move(*it,x,y) ) return false;
                         already_moved = dessin_pere->Get_already_moved();
                     }
                 }
                 else
-                    if( !dessin_pere->Move(objets[i],x,y) ) return false;
+                    if( !dessin_pere->Move(*it,x,y) ) return false;
                 already_moved = dessin_pere->Get_already_moved();
             }
         }
         else
         {
-            for(unsigned int i = 0; i < objets.size(); i++)
+            for(iterset it = objets.begin(); it != objets.end(); it++)
             {
                 for(unsigned int j=0; j<already_moved.size(); j++ )
                 {
                     if( !name.compare(already_moved[j]) )
                         return false;
-                    if( !objets[i].compare(already_moved[j]) )
+                    if( !it->compare(already_moved[j]) )
                         break;
                     if( j == already_moved.size()-1 )
                     {
-                        if( !dessin_pere->Move(objets[i],x,y) )
+                        if( !dessin_pere->Move(*it,x,y) )
                             return false;
                     }
                 }
@@ -90,18 +90,18 @@ using namespace std;
 
     bool Objet_agrege::Add( string name )
     {
-        objets.push_back(name);
+        objets.insert(name);
         return true;
     }
 
-    vector<string>* Objet_agrege::Get_objets_names( ) { return &objets; }
+    set<string>* Objet_agrege::Get_objets_names( ) { return &objets; }
 
 //-------------------------------------------- Constructeurs - destructeur
     Objet_agrege::Objet_agrege ( vector<string> cmd, Dessin* pere )
     {
         dessin_pere = pere;
         for( unsigned int i=2; i < cmd.size(); i++ )
-            objets.push_back( cmd[i] );
+            objets.insert( cmd[i] );
     }
 
     Objet_agrege::Objet_agrege ( ) { }

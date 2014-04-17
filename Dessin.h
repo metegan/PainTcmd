@@ -11,12 +11,14 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include <unordered_map>
+#include <set>
 #include <string>
 #include <vector>
 #include "Objet.h"
 //--------------------------------------------------- Types personnels
 typedef unordered_map<string,Objet*>::iterator iter;
 typedef vector<string>::iterator itvstr;
+typedef set<string>::iterator iterset;
 
 using namespace std;
 //------------------------------------------------------------------------
@@ -77,6 +79,7 @@ public:
     // Mode d'emploi :
     //  Retourne la dernière commande qui a modifié le dessin
     int Get_last_cmd_len();
+    int Get_size();
     void Undo();
 
     vector<string> Redo();

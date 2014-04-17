@@ -10,12 +10,13 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <iostream>
 
+using namespace std;
+#include <iostream>
+#include <string>
 
 //------------------------------------------------------ Include personnel
 #include "Cercle.h"
-using namespace std;
 
 //------------------------------------------------------------- Constantes
 
@@ -37,8 +38,8 @@ string Cercle::Get_radius()
 //-------------------------------------------- Constructeurs - destructeur
 
 Cercle::Cercle ( vector<string> cmd, int r ) : Figure( cmd )
-    {
-        radius=r;
-    }
+{
+    radius=r;
+}
 
 Cercle::~Cercle ( ){}
