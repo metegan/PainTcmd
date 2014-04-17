@@ -204,7 +204,7 @@ int main()
             if(!cmd_split[0].compare("REDO") )
             {
                 change=false;
-                if( dessin->Get_last_cmd_len() > 0 )
+                if( dessin->Get_cmd_redo_len() > 0 )
                     cmd_split = dessin->Redo();
                 else
                 {

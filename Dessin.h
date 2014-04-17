@@ -79,6 +79,7 @@ public:
     // Mode d'emploi :
     //  Retourne la dernière commande qui a modifié le dessin
     int Get_last_cmd_len();
+    int Get_cmd_redo_len();
     int Get_size();
     void Undo();
     void Clear_move( );
@@ -104,6 +105,7 @@ private:
 
     int cpt_undo;
     vector< vector<string> > last_cmd;
+    vector< vector<string> > cmd_redo;
     vector< pair<Objet*, vector<string>> > last_erased;
     unordered_map<string, Objet*> objet_set; // ensemble des objets
                                                   // qui constituent les dessin

@@ -231,12 +231,12 @@ bool Dessin::Move(string objet_name, int dx, int dy )
         return false;
     return true;
 }
-void Dessin::Clear_move( )
-    { already_moved.clear(); }
+
+void Dessin::Clear_move( ) { already_moved.clear(); }
 
 void Dessin::Set_last_cmd(vector<string> cmd)
 {
-    if( last_cmd.size() > 2 )
+    if( last_cmd.size() > 20 )
     {//TODO supprimer les objets/dessin
         if( !last_cmd.front()[0].compare("DELETE") )
         {
@@ -258,6 +258,7 @@ void Dessin::Set_last_cmd(vector<string> cmd)
         last_cmd.erase( last_cmd.begin() );
     }
     last_cmd.push_back(cmd);
+    cout << "SIZE : " << last_cmd.size() << endl;
 }
 
 //vector<string> Dessin::Get_last_cmd() { return last_cmd.back(); }
@@ -269,13 +270,12 @@ void Dessin::Undo()
         vector<string> new_oa;
         vector<string> o_to_delete;
 
-        if( ++cpt_undo > 1 && last_cmd.size() > 1 )
-        {
-            last_cmd.pop_back();
-            cpt_undo--;
-        }
 
         undo_cmd = last_cmd.back();
+        cmd_redo.push_back(undo_cmd);
+        last_cmd.pop_back();
+        cout << "CURRENT " << undo_cmd[0] << endl;
+        cout << "NEXT " << last_cmd.back()[0] << endl;
 
         if( !undo_cmd[0].compare("LOAD") )
         {
@@ -297,17 +297,14 @@ void Dessin::Undo()
 
         else if( !undo_cmd[0].compare("MOVE") )
         {
-            Move(undo_cmd[1], atoi(last_cmd[0][2].c_str())*(-1), atoi(last_cmd[0][3].c_str())*(-1));
+            Move(undo_cmd[1], atoi(undo_cmd[2].c_str())*(-1), atoi(undo_cmd[3].c_str())*(-1));
         }
 
         else if( !undo_cmd[0].compare("DELETE") )
         {
-            for( int i=1; i<(int)last_cmd.back().size(); i++ )
-            {
-
                 new_obj = last_erased.back();
-                Add(new_obj.first, undo_cmd[i]);
-                while( new_obj.second.size() > 0 )
+                Add(new_obj.first, undo_cmd[1]);
+                for( unsigned int i=0; i<new_obj.second.size(); i++ )
                 {
                     new_oa = vector<string>();
                     if( split( new_obj.second.back(), ' ').size() > 1 )
@@ -346,9 +343,10 @@ void Dessin::Undo()
 
 vector<string> Dessin::Redo()
 {
-    vector<string> last = last_cmd.back();
-    last_cmd.pop_back();
-    cpt_undo--;
+    vector<string> last = cmd_redo.back();
+    cmd_redo.pop_back();
+    last_cmd.push_back(last);
+    //cpt_undo--;
     return last;
 }
 
@@ -357,6 +355,8 @@ vector<string> Dessin::Get_already_moved() { return already_moved; };
 void Dessin::Add_already_moved(string nom) { already_moved.push_back(nom); }
 
 int Dessin::Get_last_cmd_len() { return last_cmd.size(); }
+
+int Dessin::Get_cmd_redo_len() { return cmd_redo.size(); }
 
 int Dessin::Get_size() { return objet_set.size(); }
 
