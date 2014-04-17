@@ -24,7 +24,7 @@ using namespace std;
 
     bool Rectangle::Move ( int x, int y )
     {
-        return set_of_points[0].Move(x,y);
+        set_of_points[0].Move(x,y);
         return set_of_points[1].Move(x,y);
     }
 

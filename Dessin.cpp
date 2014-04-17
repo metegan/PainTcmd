@@ -218,7 +218,9 @@ bool Dessin::Move(string objet_name, int dx, int dy )
     if( objet_set.find(objet_name) != objet_set.end() )
     {
         if( !split( objet_set[objet_name]->Get_cmd( objet_set[objet_name], objet_name ), ' ')[0].compare("OA") )
+        {
             ((Objet_agrege*)objet_set[objet_name])->Move(dx, dy, objet_name);
+        }
         else
         {
             objet_set[objet_name]->Move(dx, dy);
@@ -229,6 +231,8 @@ bool Dessin::Move(string objet_name, int dx, int dy )
         return false;
     return true;
 }
+void Dessin::Clear_move( )
+    { already_moved.clear(); }
 
 void Dessin::Set_last_cmd(vector<string> cmd)
 {

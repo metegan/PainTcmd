@@ -81,6 +81,8 @@ public:
     int Get_last_cmd_len();
     int Get_size();
     void Undo();
+    void Clear_move( );
+
 
     vector<string> Redo();
 

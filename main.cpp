@@ -238,6 +238,7 @@ int main()
                     cout << "ERR" << endl;
                     cout << "# Object " << cmd_split[1] << " unknown" << endl;
                 }
+                dessin->Clear_move();
 
             }
 
@@ -260,10 +261,10 @@ int main()
                     }
                     else
                     {
-                        cout << "OK" << endl;
                         //cout << "# Object " << cmd_split[i] << " deleted" << endl;
                     }
                 }
+                cout << "OK" << endl;
             }
 
             else if( !cmd_split[0].compare("CLEAR") )

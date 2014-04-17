@@ -44,48 +44,36 @@ using namespace std;
 
     bool Objet_agrege::Move ( int x, int y, string name )
     {
+        bool found;
         vector<string> already_moved = dessin_pere->Get_already_moved();
-        dessin_pere->Add_already_moved(name);
-        if( already_moved.size() < 1 )
+
+        for( unsigned int i=0; i<already_moved.size(); i++ )
         {
-            for(iterset it = objets.begin(); it != objets.end(); it++)
+            if( !already_moved[i].compare(name) )
+                return true;
+        }
+        dessin_pere->Add_already_moved(name);
+        already_moved = dessin_pere->Get_already_moved();
+
+        for(iterset it = objets.begin(); it != objets.end(); it++)
+        {
+            found = false;
+            for(unsigned int j=0; j<already_moved.size(); j++ )
             {
-                if( already_moved.size() > 0 )
+                if( !it->compare(already_moved[j]) )
                 {
-                    for(unsigned int j=0; j<already_moved.size(); j++ )
-                    {
-                        if( !it->compare(already_moved[j]) )
-                            break;
-                        if( j == already_moved.size()-1 )
-                            if( !dessin_pere->Move(*it,x,y) ) return false;
-                        already_moved = dessin_pere->Get_already_moved();
-                    }
+                    found = true;
+                    break;
                 }
-                else
-                    if( !dessin_pere->Move(*it,x,y) ) return false;
+            }
+            if( !found )
+            {
+                dessin_pere->Move(*it,x,y);
+                dessin_pere->Add_already_moved(*it);
                 already_moved = dessin_pere->Get_already_moved();
             }
         }
-        else
-        {
-            for(iterset it = objets.begin(); it != objets.end(); it++)
-            {
-                for(unsigned int j=0; j<already_moved.size(); j++ )
-                {
-                    if( !name.compare(already_moved[j]) )
-                        return false;
-                    if( !it->compare(already_moved[j]) )
-                        break;
-                    if( j == already_moved.size()-1 )
-                    {
-                        if( !dessin_pere->Move(*it,x,y) )
-                            return false;
-                    }
-                }
-            }
-        }
         return true;
-
     }
 
     bool Objet_agrege::Add( string name )
